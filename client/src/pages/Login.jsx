@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import OAuth from '../components/OAuth';
 import axiosInstance from '@/lib/axiosInstance';
+import { setUser } from '@/redux/authSlice';
 
 export default function Login() {
     const [formData, setFormData] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
@@ -32,7 +35,8 @@ export default function Login() {
             const res = await axiosInstance.post('/auth/login', formData,{
                 withCredentials: true
             });
-            console.log(res);
+            // console.log(res.data);
+            dispatch(setUser(res.data));
             setLoading(false);
             navigate('/home');
         } catch (error) {

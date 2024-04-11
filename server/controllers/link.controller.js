@@ -4,20 +4,24 @@ const Link = require("../models/url.model");
 const User = require("../models/user.model");
 const errorHandler = require("../utils/error");
 const generateHashedString = require("../utils/generateLink");
+const getTitleFromUrl = require('../utils/getTitle');
 
 async function shortenLink(req, res, next) {
-    const { url, back_half, title } = req.body;
-    console.log(username)
-    if (!url || !title) {
-        return next(errorHandler(400, 'All fields are required'));
+    let { url, back_half, title } = req.body;
+    if (!url) {
+        return next(errorHandler(400, 'Url required'));
+    }
+    if (!title) {
+        title = await getTitleFromUrl(url);
     }
     const { id, username } = req.user;
-    console.log(id, username)
     try {
         const existingUser = await User.findOne({ username });
         if (!existingUser) {
             return next(errorHandler(404, 'User not found'));
         }
+        const domain = url.split('/')[2];
+        const logo = `https://logo.clearbit.com/${domain}?size=32`;
         if (back_half) {
             const existingBackHalf = await Link.findOne({ back_half });
             if (existingBackHalf) {
@@ -28,7 +32,8 @@ async function shortenLink(req, res, next) {
                 url,
                 shortUrl: back_half,
                 title,
-                user: id
+                user: id,
+                logo
             });
             await newLink.save();
             res.status(201).json({ message: 'Link created successfully' });
@@ -39,7 +44,8 @@ async function shortenLink(req, res, next) {
                 url,
                 shortUrl,
                 title,
-                user: id
+                user: id,
+                logo
             });
             await newLink.save();
             res.status(201).json({ message: 'Link created successfully' });

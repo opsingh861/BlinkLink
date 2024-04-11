@@ -1,12 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import Button from "@/components/Button";
 import Divider from "@/components/Divider";
 import InputComponent from "@/components/CustomInput";
 import ToggleButton from "@/components/ToggleButton";
 import { useState } from "react";
+import axiosInstance from "@/lib/axiosInstance";
 
 const CreateLink = () => {
     const [destination, setDestination] = useState("");
     const [title, setTitle] = useState("");
+    const [backHalf, setBackHalf] = useState(undefined);
     const [isToggled, setIsToggled] = useState(false);
 
     return (
@@ -62,7 +65,8 @@ const CreateLink = () => {
                                 <InputComponent
                                     label="Title"
                                     placeholder=""
-                                    value={title}
+                                    value={"blinklink.in"}
+                                    readOnly={true}
                                     onChange={(e) => setTitle(e.target.value)}
                                     className="text-base w-full"
                                 />
@@ -74,10 +78,10 @@ const CreateLink = () => {
                                 </p>
 
                                 <InputComponent
-                                    label="Title"
+                                    label="Back-half"
                                     placeholder=""
-                                    value={title}
-                                    onChange={(e) => setTitle(e.target.value)}
+                                    value={backHalf}
+                                    onChange={(e) => setBackHalf(e.target.value)}
                                     className="text-base w-full"
                                 />
                             </div>
@@ -121,12 +125,31 @@ const CreateLink = () => {
                     </div>
                 </form>
             </div>
-            <Footer />
+            <Footer url={destination} title={title} />
         </section>
     );
 };
 
-const Footer = () => {
+const Footer = ({ url, title, backHalf }) => {
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const createShortLink = async () => {
+        setLoading(true);
+        try {
+            const response = await axiosInstance.post("/links/shorten", {
+                url: url,
+                back_half: backHalf,
+                title,
+            });
+            setLoading(false);
+            console.log(response.data);
+            navigate("/links");
+
+        } catch (error) {
+            setLoading(false);
+            console.error(error);
+        }
+    }
     return (
         <div className="w-full flex flex-col gap-2">
             <Divider />
@@ -142,13 +165,13 @@ const Footer = () => {
                 </div>
                 <div className="">
                     <Button
-                        label="Cancel"
-                        onClick={() => {}}
+                        label={"Cancel"}
+                        onClick={() => { }}
                         className="bg-transparent text-blue-600 mr-2 rounded-sm hover:bg-zinc-300"
                     />
                     <Button
-                        label="Create"
-                        onClick={() => {}}
+                        label={loading ? "Creating..." : "Create"}
+                        onClick={createShortLink}
                         className="bg-blue-600 text-white rounded-sm hover:bg-blue-700"
                     />
                 </div>

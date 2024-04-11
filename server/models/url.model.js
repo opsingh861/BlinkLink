@@ -25,6 +25,10 @@ const linkSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
+    },
+    logo: {
+        type: String,
+        default: 'https://t1.gstatic.com/faviconV2'
     }
 }, { timestamps: true });
 

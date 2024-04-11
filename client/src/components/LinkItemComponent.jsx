@@ -5,7 +5,7 @@ const LinkItemComponent = ({
     shortUrl,
     url,
     date,
-    iconUrl = "https://www.freepnglogos.com/uploads/google-logo-png/google-logo-icon-png-transparent-background-osteopathy-16.png",
+    iconUrl,
     clicks
 }) => {
     const fullUrl = `http://localhost:3000/${shortUrl}`;
@@ -25,13 +25,14 @@ const LinkItemComponent = ({
     };
     return (
         <section className="px-6 py-4 flex items-start justify-between gap-4 bg-white rounded-xl">
-            <div className="h-8 w-8 rounded-full">
+            <div className="h-12 w-12 rounded-full border border-gray-300 flex items-center justify-center">
                 <img
                     src={iconUrl}
                     alt="icon"
-                    className="h-full w-full object-cover"
+                    className="h-8 w-8 object-cover"
                 />
             </div>
+
             <div className="flex flex-col overflow-hidden whitespace-nowrap overflow-ellipsis gap-1 flex-1">
                 <h1 className="font-bold text-lg mb-1">{title}</h1>
                 <p className="text-base text-blue-400">
