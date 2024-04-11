@@ -1,23 +1,27 @@
 const redis = require('redis');
+const UserAgent = require('useragent');
 const Link = require("../models/url.model");
+const User = require("../models/user.model");
 const errorHandler = require("../utils/error");
 const generateHashedString = require("../utils/generateLink");
 
 async function shortenLink(req, res, next) {
-    const { url, back_half, title, id, username } = req.body;
+    const { url, back_half, title } = req.body;
+    console.log(username)
     if (!url || !title) {
-        next(errorHandler(400, 'All fields are required'));
+        return next(errorHandler(400, 'All fields are required'));
     }
-    // const { id, username } = req.user;
+    const { id, username } = req.user;
+    console.log(id, username)
     try {
-        const existingLink = await Link.findOne({ url });
-        if (existingLink) {
-            next(errorHandler(400, 'Link already exists'));
+        const existingUser = await User.findOne({ username });
+        if (!existingUser) {
+            return next(errorHandler(404, 'User not found'));
         }
         if (back_half) {
             const existingBackHalf = await Link.findOne({ back_half });
             if (existingBackHalf) {
-                next(errorHandler(400, 'Back half already exists'));
+                return next(errorHandler(400, 'Back half already exists'));
             }
 
             const newLink = new Link({
@@ -50,12 +54,18 @@ async function shortenLink(req, res, next) {
 
 async function redirectToOriginalLink(req, res, next) {
     const { shortUrl } = req.params;
-    const client = redis.createClient({ url: 'redis://127.0.0.1:6379' }); // Create Redis client
-    await client.connect(); // Connect to Redis server
+    const agent = UserAgent.parse(req.headers['user-agent']);
+    console.log(agent.toString());
+    console.log(agent.toAgent()); // Example output: "Chrome 98.0.4758"
+    console.log(agent.os.toString()); // Example output: "Windows 10.0"
+    console.log(agent.device.toString())
     try {
+        const client = redis.createClient({ url: 'redis://127.0.0.1:6379' }); // Create Redis client
+        await client.connect(); // Connect to Redis server
+
         // Check Redis cache for short URL
         const cachedUrl = await client.get(shortUrl);
-
+        // console.log(cachedUrl)
         if (cachedUrl) {
             console.log('Link retrieved from Redis cache');
             res.redirect(cachedUrl);
@@ -89,8 +99,60 @@ async function redirectToOriginalLink(req, res, next) {
     }
 }
 
+async function deleteLink(req, res, next) {
+    const { shortUrl } = req.params;
+    try {
+        const link = await Link.findOneAndDelete({ shortUrl });
+        if (!link) {
+            return next(errorHandler(404, 'Link not found'));
+        }
+        res.status(200).json({ message: 'Link deleted successfully' });
+    }
+    catch (error) {
+        console.error(error);
+        next(errorHandler(400, error.message));
+    }
+}
+
+async function updateLink(req, res, next) {
+    const { shortUrl } = req.params;
+    const { title } = req.body;
+    if (!title) return next(errorHandler(400, 'Title is required'));
+    try {
+        const link = await Link.findOneAndUpdate({ shortUrl }, { title }, { new: true });
+        if (!link) {
+            return next(errorHandler(404, 'Link not found'));
+        }
+        res.status(200).json({ message: 'Link updated successfully' });
+    }
+    catch (error) {
+        console.error(error);
+        next(errorHandler(400, error.message));
+    }
+}
+
+async function getLinks(req, res, next) {
+    // const { username } = req.params;
+    const { username } = req.user;
+    console.log(username)
+    try {
+        const user = await User.findOne({ username });
+        if (!user) {
+            return next(errorHandler(404, 'User not found'));
+        }
+        const links = await Link.find({ user: user._id });
+        res.status(200).json({ links });
+    }
+    catch (error) {
+        console.error(error);
+        next(errorHandler(400, error.message));
+    }
+}
+
 module.exports = {
     shortenLink,
     redirectToOriginalLink,
-    // incrementClicks
+    deleteLink,
+    updateLink,
+    getLinks
 };

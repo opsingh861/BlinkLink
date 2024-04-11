@@ -1,13 +1,15 @@
-import Navbar from '@/components/Navbar'
-import React from 'react'
+import Header from "@/components/Header";
+import HeroBanner from "@/components/HeroBanner";
 
 const Landing = () => {
     return (
-        <div>
-            <Navbar />
-            <h1>Landing Page</h1>
-        </div>
-    )
-}
+        <>
+            <Header />
+            <div className="px-12 py-6">
+                <HeroBanner />
+            </div>
+        </>
+    );
+};
 
-export default Landing
+export default Landing;

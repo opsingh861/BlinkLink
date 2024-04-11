@@ -38,12 +38,15 @@ const login = async (req, res, next) => {
         const token = jwt.sign({ id: validUser._id, username: validUser.username }, process.env.JWT_SECRET);
         const { password: hashedPassword, ...rest } = validUser._doc;
         const expiryDate = new Date(Date.now() + 3600000); // 1 hour
-        res
-            .cookie('access_token', token, { httpOnly: true, expires: expiryDate })
+        console.log(token)
+        return res.cookie('access_token', token, {
+            httpOnly: true,
+            expires: expiryDate,
+        })
             .status(200)
             .json(rest);
     } catch (error) {
-        next();
+        next(errorHandler(400, error.message));
     }
 };
 
@@ -67,6 +70,7 @@ const google = async (req, res, next) => {
                 Math.random().toString(36).slice(-8);
             const hashedPassword = await bcrypt.hash(generatedPassword, 10);
             const newUser = new User({
+                name: req.body.name,
                 username:
                     req.body.name.split(' ').join('').toLowerCase() +
                     Math.random().toString(36).slice(-8),
@@ -87,6 +91,7 @@ const google = async (req, res, next) => {
                 .json(rest);
         }
     } catch (error) {
+        console.log(error);
         next(error);
     }
 };
