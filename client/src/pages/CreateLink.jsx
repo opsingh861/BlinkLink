@@ -1,10 +1,12 @@
-import { useNavigate } from "react-router-dom";
 import Button from "@/components/Button";
 import Divider from "@/components/Divider";
-import InputComponent from "@/components/CustomInput";
+import { FaSpinner } from "react-icons/fa";
+import InputComponent from "@/components/InputComponent";
+import PropTypes from "prop-types";
 import ToggleButton from "@/components/ToggleButton";
-import { useState } from "react";
 import axiosInstance from "@/lib/axiosInstance";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const CreateLink = () => {
     const [destination, setDestination] = useState("");
@@ -13,13 +15,18 @@ const CreateLink = () => {
     const [isToggled, setIsToggled] = useState(false);
 
     return (
-        <section className="flex flex-col  gap-2 items-start py-2 ">
-            <div className="overflow-y-auto w-full">
+        <section
+            className="flex flex-col gap-2 items-start bg-white"
+            style={{
+                height: "calc(100vh - 4rem)",
+            }}
+        >
+            <div className="overflow-y-auto w-full px-4 py-2 gap-4 h-full">
                 <form
                     action=""
-                    className="flex flex-col gap-6 w-1/2 mx-auto h-[90vh] "
+                    className="flex flex-col gap-6 lg:w-1/2 md:w-3/4 sm:w-full mx-auto"
                 >
-                    <h1 className="font-bold text-4xl">Create New</h1>
+                    <h1 className="font-bold text-4xl mt-10">Create New</h1>
                     <div className="flex flex-col gap-3">
                         <p className="text-lg font-medium">Destination</p>
                         <InputComponent
@@ -66,7 +73,7 @@ const CreateLink = () => {
                                     label="Title"
                                     placeholder=""
                                     value={"blinklink.in"}
-                                    readOnly={true}
+                                    readOnly
                                     onChange={(e) => setTitle(e.target.value)}
                                     className="text-base w-full"
                                 />
@@ -74,21 +81,26 @@ const CreateLink = () => {
                             <p className="mt-auto mb-3">/</p>
                             <div className="flex flex-col items-start gap-2 w-1/2">
                                 <p className="text-sm font-medium">
-                                    Custom back-half (optional)
+                                    Custom back-half{" "}
+                                    <span className="font-light">
+                                        (optional)
+                                    </span>
                                 </p>
 
                                 <InputComponent
                                     label="Back-half"
                                     placeholder=""
                                     value={backHalf}
-                                    onChange={(e) => setBackHalf(e.target.value)}
+                                    onChange={(e) =>
+                                        setBackHalf(e.target.value)
+                                    }
                                     className="text-base w-full"
                                 />
                             </div>
                         </div>
                         <p className="font-light text-sm">
-                            You can create <strong>5</strong> more custom
-                            back-halves this month
+                            You can create <span className="font-bold">5</span>{" "}
+                            more custom back-halves this month
                         </p>
                     </div>
 
@@ -144,14 +156,13 @@ const Footer = ({ url, title, backHalf }) => {
             setLoading(false);
             console.log(response.data);
             navigate("/links");
-
         } catch (error) {
             setLoading(false);
             console.error(error);
         }
-    }
+    };
     return (
-        <div className="w-full flex flex-col gap-2">
+        <div className="w-full flex flex-col gap-2 pb-3">
             <Divider />
 
             <div className="flex gap-4 px-4 items-center justify-between">
@@ -163,21 +174,37 @@ const Footer = ({ url, title, backHalf }) => {
                         </span>
                     </p>
                 </div>
-                <div className="">
+                <div className="flex gap-2">
                     <Button
                         label={"Cancel"}
-                        onClick={() => { }}
-                        className="bg-transparent text-blue-600 mr-2 rounded-sm hover:bg-zinc-300"
+                        onClick={() => {}}
+                        className="bg-transparent text-blue-600 rounded-sm hover:bg-zinc-200"
                     />
                     <Button
-                        label={loading ? "Creating..." : "Create"}
+                        label={loading ? "Creating" : "Create"}
                         onClick={createShortLink}
                         className="bg-blue-600 text-white rounded-sm hover:bg-blue-700"
-                    />
+                    >
+                        <FaSpinner
+                            className={`animate-spin ${
+                                loading ? "block" : "hidden"
+                            }`}
+                        />
+                    </Button>
                 </div>
             </div>
         </div>
     );
 };
 
+Footer.defaultProps = {
+    url: "",
+    title: "",
+    backHalf: "",
+};
+Footer.propTypes = {
+    url: PropTypes.string,
+    title: PropTypes.string,
+    backHalf: PropTypes.string,
+};
 export default CreateLink;

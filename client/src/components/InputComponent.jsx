@@ -4,7 +4,7 @@ const InputComponent = ({
     type = "text",
     placeholder = "",
     value = "",
-    onChange = () => { },
+    onChange = () => {},
     className,
     readOnly = false,
     ...rest
@@ -16,7 +16,11 @@ const InputComponent = ({
             value={value}
             onChange={onChange}
             readOnly={readOnly}
-            className={`border border-gray-300 rounded-md py-2 px-4 font-light hover:border-blue-500 focus:outline-none ${className}`}
+            className={`border border-gray-300 rounded-md py-2 px-4 font-light focus:outline-none ${
+                readOnly
+                    ? "bg-gray-100 cursor-auto text-zinc-500"
+                    : "focus:ring-2 focus:ring-blue-500 focus:ring-inset focus:border-transparent hover:border-gray-500 transition duration-200"
+            } ${className}`}
             {...rest}
         />
     );
@@ -28,6 +32,7 @@ InputComponent.propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func,
     className: PropTypes.string,
+    readOnly: PropTypes.bool,
 };
 
 export default InputComponent;

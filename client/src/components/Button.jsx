@@ -3,18 +3,20 @@ import PropTypes from "prop-types";
 const Button = ({
     label = "",
     className = "",
-    onClick = () => { },
+    onClick = () => {},
     disabled = false,
     icon = null,
+    ...rest
 }) => {
     return (
         <button
-            className={`px-6 py-2 cursor-pointer ${className}`}
+            className={`px-6 py-2 cursor-pointer flex items-center justify-center gap-2 ${className}`}
             onClick={onClick}
             disabled={disabled}
         >
             {label}
             {icon}
+            {rest.children}
         </button>
     );
 };

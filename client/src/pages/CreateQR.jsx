@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import Divider from "@/components/Divider";
-import InputComponent from "@/components/CustomInput";
+import InputComponent from "@/components/InputComponent";
 import { useState } from "react";
 
 const CreateQR = () => {

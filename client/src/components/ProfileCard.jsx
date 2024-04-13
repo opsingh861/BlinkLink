@@ -1,31 +1,34 @@
+import { useDispatch, useSelector } from "react-redux";
+
 import Divider from "./Divider";
 import { FaChevronDown } from "react-icons/fa";
 import PropTypes from "prop-types";
-import { getAvatarUrl } from "@/lib/utils";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { clearUser } from "@/redux/authSlice";
-import { useNavigate } from "react-router-dom";
 import axiosInstance from "@/lib/axiosInstance";
+import { clearUser } from "@/redux/authSlice";
+import { getAvatarUrl } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const ProfileCard = () => {
     const [open, setOpen] = useState(false);
     const user = useSelector((state) => state.auth.user);
-    return (user &&
-        <section
-            className="flex items-center justify-center gap-3 hover:bg-gray-200/50 px-2 py-1 cursor-pointer rounded-sm"
-            onClick={() => setOpen(!open)}
-        >
-            {/* user first name */}
-            <div className="flex items-center gap-2 h-8 w-8">
-                <img src={getAvatarUrl(user.name)} className="" />
-            </div>
-            {/* user full name */}
-            <p className="text-sm font-light">{user.name}</p>
-            {/* dropdown icon */}
-            <FaChevronDown className="text-xs" />
-            {open && <Dropdown user={user} />}
-        </section>
+    return (
+        user && (
+            <section
+                className="flex items-center justify-center gap-3 hover:bg-gray-200/50 px-2 py-1 cursor-pointer rounded-sm"
+                onClick={() => setOpen(!open)}
+            >
+                {/* user first name */}
+                <div className="flex items-center gap-2 h-8 w-8">
+                    <img src={getAvatarUrl(user.name)} className="" />
+                </div>
+                {/* user full name */}
+                <p className="text-sm font-light">{user.name}</p>
+                {/* dropdown icon */}
+                <FaChevronDown className="text-xs" />
+                {open && <Dropdown user={user} />}
+            </section>
+        )
     );
 };
 
@@ -40,8 +43,7 @@ const Dropdown = ({ className, user }) => {
             console.log(res);
             dispatch(clearUser());
             navigate("/sign-in");
-        }
-        catch (error) {
+        } catch (error) {
             console.log("could not sign out", error);
         }
     };
@@ -57,9 +59,7 @@ const Dropdown = ({ className, user }) => {
                     />
                     <div className="flex flex-col gap-1">
                         <p className="text-sm font-semibold">{user.name}</p>
-                        <p className="text-sm text-slate-500">
-                            {user.email}
-                        </p>
+                        <p className="text-sm text-slate-500">{user.email}</p>
                     </div>
                 </div>
             </div>
@@ -96,6 +96,7 @@ const Dropdown = ({ className, user }) => {
 
 Dropdown.propTypes = {
     className: PropTypes.string,
+    user: PropTypes.object.isRequired,
 };
 
 export default ProfileCard;
