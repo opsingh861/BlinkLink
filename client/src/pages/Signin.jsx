@@ -10,9 +10,10 @@ import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 
-export default function Signup() {
+export default function Signin() {
     const [formData, setFormData] = useState({});
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const handleChange = (e) => {
@@ -25,7 +26,7 @@ export default function Signup() {
         try {
             setLoading(true);
 
-            const res = await axiosInstance.post("/auth/signup", formData, {
+            const res = await axiosInstance.post("/auth/login", formData, {
                 withCredentials: true,
             });
             dispatch(setUser(res.data));
@@ -36,6 +37,7 @@ export default function Signup() {
             let errorMessage = error.response.data.message;
             console.log(errorMessage);
             setLoading(false);
+            setError("Error: " + errorMessage);
             errorMessage =
                 errorMessage.charAt(0).toUpperCase() + errorMessage.slice(1);
             toast.error(errorMessage);
@@ -46,7 +48,7 @@ export default function Signup() {
             {/* left side */}
             <div className="flex flex-col mx-auto justify-center w-1/3">
                 <h1 className="text-3xl font-semibold my-7">
-                    Create your account
+                    Log in and start sharing
                 </h1>
                 <OAuth />
 
@@ -86,18 +88,21 @@ export default function Signup() {
                     </p>
 
                     <Button
-                        label={loading ? "Loading..." : "Create free account"}
+                        label={loading ? "Loading..." : "Log In"}
                         disabled={loading}
                         type="submit"
                         className="bg-blue-600 text-white rounded-md py-2 px-4 font-medium hover:bg-blue-600 transition duration-200"
                     />
                 </form>
                 <div className="flex gap-2 mt-5 items-center justify-center">
-                    <p>Dont Have an account?</p>
+                    <p>Don&apos;t Have an account?</p>
                     <Link to="/sign-up">
                         <span className="text-blue-500">Sign up</span>
                     </Link>
                 </div>
+                {/* <p className="text-red-700 mt-5">
+                    {error ? error || "Something went wrong!" : ""}
+                </p> */}
             </div>
 
             {/* right side */}

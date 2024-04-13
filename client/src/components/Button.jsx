@@ -6,6 +6,7 @@ const Button = ({
     onClick = () => {},
     disabled = false,
     icon = null,
+    type = "button",
     ...rest
 }) => {
     return (
@@ -13,6 +14,7 @@ const Button = ({
             className={`px-6 py-2 cursor-pointer flex items-center justify-center gap-2 ${className}`}
             onClick={onClick}
             disabled={disabled}
+            type={type}
         >
             {label}
             {icon}
@@ -27,6 +29,7 @@ Button.propTypes = {
     onClick: PropTypes.func,
     disabled: PropTypes.bool,
     icon: PropTypes.element,
+    type: PropTypes.string,
 };
 
 export default Button;

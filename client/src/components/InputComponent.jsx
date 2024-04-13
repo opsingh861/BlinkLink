@@ -7,6 +7,7 @@ const InputComponent = ({
     onChange = () => {},
     className,
     readOnly = false,
+    id,
     ...rest
 }) => {
     return (
@@ -16,6 +17,7 @@ const InputComponent = ({
             value={value}
             onChange={onChange}
             readOnly={readOnly}
+            id={id}
             className={`border border-gray-300 rounded-md py-2 px-4 font-light focus:outline-none ${
                 readOnly
                     ? "bg-gray-100 cursor-auto text-zinc-500"
@@ -33,6 +35,7 @@ InputComponent.propTypes = {
     onChange: PropTypes.func,
     className: PropTypes.string,
     readOnly: PropTypes.bool,
+    id: PropTypes.string,
 };
 
 export default InputComponent;

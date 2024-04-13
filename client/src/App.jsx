@@ -8,21 +8,25 @@ import Error404 from "./pages/Error404";
 import Home from "./pages/Home";
 import Landing from "./pages/Landing";
 import Links from "./pages/Links";
-import Login from "./pages/Login";
 import Plans from "./pages/Plans";
 import PrivateRoute from "./components/PrivateRoute";
 import Qrcode from "./pages/Qrcode";
+import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
+import { Toaster } from "react-hot-toast";
 
 function App() {
     return (
         <div>
+            <Toaster position="top-right" reverseOrder={false} />
+
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Landing />} />
                     <Route path="/sign-up" element={<Signup />} />
-                    <Route path="/sign-in" element={<Login />} />
+                    <Route path="/sign-in" element={<Signin />} />
                     <Route path="/plans" element={<Plans />} />
+                    <Route path="*" element={<Error404 />} />
 
                     <Route element={<PrivateRoute />}>
                         <Route path="/home" element={<Home />} />
@@ -33,7 +37,6 @@ function App() {
                         <Route path="/analytics" element={<Analytics />} />
                         <Route path="*" element={<ComingSoon />} />
                     </Route>
-                    <Route path="*" element={<Error404 />} />
                 </Routes>
             </BrowserRouter>
         </div>

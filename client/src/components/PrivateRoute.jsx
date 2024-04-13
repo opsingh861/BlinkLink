@@ -1,14 +1,13 @@
 import { Navigate, Outlet } from "react-router-dom";
+
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 
-
 export default function PrivateRoute() {
     const [open, setOpen] = useState(true);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-    // const isAuthenticated = true;
     return (
         <main className="flex h-screen w-full">
             <section
@@ -20,7 +19,7 @@ export default function PrivateRoute() {
             </section>
 
             <section
-                className={`h-full flex bg-[#f4f6fa]  flex-col overflow-hidden duration-300 ${
+                className={`h-full flex bg-[#f4f6fa] flex-col duration-300 ${
                     open ? "w-[85%]" : "w-[95%]"
                 }`}
             >

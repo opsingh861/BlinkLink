@@ -15,7 +15,7 @@ const ProfileCard = () => {
     return (
         user && (
             <section
-                className="flex items-center justify-center gap-3 hover:bg-gray-200/50 px-2 py-1 cursor-pointer rounded-sm"
+                className="flex items-center justify-center gap-3 hover:bg-gray-200/50 px-2 py-1 cursor-pointer rounded-sm z-10"
                 onClick={() => setOpen(!open)}
             >
                 {/* user first name */}
