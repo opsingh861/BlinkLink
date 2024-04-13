@@ -62,6 +62,9 @@ const Sidebar = ({ open, setOpen }) => {
             if (window.innerWidth <= 1024) {
                 setOpen(false);
             }
+            else {
+                setOpen(true);
+            }
         };
         window.addEventListener("resize", handleResize);
         return () => {

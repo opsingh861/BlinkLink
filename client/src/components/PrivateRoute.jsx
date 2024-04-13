@@ -1,14 +1,14 @@
 import { Navigate, Outlet } from "react-router-dom";
-
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useState } from "react";
+
 
 export default function PrivateRoute() {
     const [open, setOpen] = useState(true);
-    // const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-    const isAuthenticated = true;
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    // const isAuthenticated = true;
     return (
         <main className="flex h-screen w-full">
             <section

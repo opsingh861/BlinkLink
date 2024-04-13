@@ -19,18 +19,6 @@ export default function Login() {
         e.preventDefault();
         try {
             setLoading(true);
-            //   const res = await fetch('/api/auth/login', {
-            //     method: 'POST',
-            //     headers: {
-            //       'Content-Type': 'application/json',
-            //     },
-            //     body: JSON.stringify(formData),
-            //   });
-            //   const data = await res.json();
-            //   if (data.success === false) {
-            //     // dispatch(signInFailure(data));
-            //     return;
-            //   }
 
             const res = await axiosInstance.post('/auth/login', formData,{
                 withCredentials: true
@@ -40,9 +28,9 @@ export default function Login() {
             setLoading(false);
             navigate('/home');
         } catch (error) {
-            console.log(error);
+            console.log(error.response.data.message);
             setLoading(false);
-            setError(error);
+            setError(error.response.data.message);
         }
     };
     return (
@@ -78,7 +66,7 @@ export default function Login() {
                 </Link>
             </div>
             <p className='text-red-700 mt-5'>
-                {error ? error.message || 'Something went wrong!' : ''}
+                {error ? error || 'Something went wrong!' : ''}
             </p>
         </div>
     );
