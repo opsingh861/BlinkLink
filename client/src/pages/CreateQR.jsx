@@ -1,6 +1,8 @@
+import { BsQrCode } from "react-icons/bs";
 import Button from "@/components/Button";
 import Divider from "@/components/Divider";
 import InputComponent from "@/components/InputComponent";
+import { IoMdLock } from "react-icons/io";
 import { useState } from "react";
 
 const CreateQR = () => {
@@ -8,10 +10,20 @@ const CreateQR = () => {
     const [title, setTitle] = useState("");
 
     return (
-        <section className="h-full z-auto flex">
-            <div className="w-3/5 h-full relative bg-white overflow-y-auto">
-                <form action="" className="flex flex-col gap-6 mx-16">
-                    <h1 className="font-bold text-4xl">Create a QR Code</h1>
+        <section
+            className="flex overflow-y-auto bg-white"
+            style={{
+                height: "calc(100vh - 4rem)",
+            }}
+        >
+            <div className="flex flex-col">
+                <form
+                    action=""
+                    className="flex flex-col gap-6 w-4/5 mx-auto h-full mb-5"
+                >
+                    <h1 className="font-bold text-4xl mt-10">
+                        Create a QR Code
+                    </h1>
                     <p className="font-light text-sm">
                         You can create <strong>2</strong> more QR Codes this
                         month.{" "}
@@ -20,7 +32,7 @@ const CreateQR = () => {
                         </span>
                     </p>
                     <div className="flex flex-col gap-3">
-                        <p className="text-lg font-medium">Destination URL</p>
+                        <p className="text-xl font-medium">Destination URL</p>
                         <InputComponent
                             label="Destination"
                             placeholder="https://example.com/my-long-url"
@@ -37,7 +49,7 @@ const CreateQR = () => {
                     <Divider />
 
                     <div className="flex flex-col gap-3">
-                        <p className="text-xl font-semibold">Code details</p>
+                        <p className="text-2xl font-semibold">Code details</p>
                         <p className="text-base font-semibold">
                             Title <span className="font-light">(optional)</span>
                         </p>
@@ -51,7 +63,7 @@ const CreateQR = () => {
                     </div>
 
                     <div className="flex flex-col gap-3">
-                        <p className="text-lg font-semibold">Short link</p>
+                        <p className="text-xl font-semibold">Short link</p>
                         <p className="text-sm font-light">
                             The short link directs users to the website or
                             content linked to your QR Code. If you update the
@@ -60,20 +72,24 @@ const CreateQR = () => {
                         </p>
                         <div className="flex items-center gap-4 ">
                             <div className="flex flex-col items-start gap-2 w-1/2">
-                                <p className="text-sm font-medium">Domain</p>
+                                <p className="text-base font-medium flex gap-1 items-center">
+                                    Domain
+                                    <IoMdLock size={16} />
+                                </p>
                                 <InputComponent
                                     label="Title"
                                     placeholder=""
-                                    value={title}
+                                    value={"blinklink.in"}
+                                    readOnly
                                     onChange={(e) => setTitle(e.target.value)}
                                     className="text-base w-full"
                                 />
                             </div>
                             <p className="mt-auto mb-3">/</p>
                             <div className="flex flex-col items-start gap-2 w-1/2">
-                                <p className="text-sm font-medium">
+                                <p className="text-base font-medium">
                                     Custom back-half{" "}
-                                    <span className="font-normal">
+                                    <span className="font-light">
                                         (optional)
                                     </span>
                                 </p>
@@ -92,12 +108,14 @@ const CreateQR = () => {
                 <Footer />
             </div>
 
-            <div className="w-2/5 h-full bg-cover bg-center flex flex-col items-center py-10">
-                <p className="text-lg font-semibold text-zinc-600 my-5">
+            <div className="w-2/5 h-full bg-cover bg-center flex flex-col items-center pt-20 bg-[#f4f6fa] sticky top-0">
+                <p className="text-lg font-semibold text-zinc-700 my-6">
                     Preview
                 </p>
 
-                <div className="h-52 w-52 bg-blue-400"></div>
+                <div className="flex items-center justify-center p-5 bg-white rounded-lg shadow-lg">
+                    <BsQrCode size={152} />
+                </div>
             </div>
         </section>
     );
@@ -106,7 +124,7 @@ const CreateQR = () => {
 const Footer = () => {
     return (
         <div
-            className="flex flex-col gap-2 py-4 absolute bottom-0 w-full bg-white"
+            className="flex flex-col gap-2 py-4 sticky bottom-0 w-full bg-white"
             style={{
                 boxShadow: "0px -4px 10px 0px rgba(0, 0, 0, 0.1)",
             }}

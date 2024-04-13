@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from "react";
+
 import { AiOutlineLink } from "react-icons/ai";
 import Button from "./Button";
 import { CiSettings } from "react-icons/ci";
@@ -13,7 +15,6 @@ import PropTypes from "prop-types";
 import { RiProfileLine } from "react-icons/ri";
 import { SiSimpleanalytics } from "react-icons/si";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 const Sidebar = ({ open, setOpen }) => {
     const labels = [
@@ -54,11 +55,25 @@ const Sidebar = ({ open, setOpen }) => {
         },
     ];
     const [openPopup, setOpenPopup] = useState(!open);
+    // define a listener which set the open = false when the screen size is less than 768px
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth <= 1024) {
+                setOpen(false);
+            }
+        };
+        window.addEventListener("resize", handleResize);
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, [setOpen]);
     return (
         <section className="px-4 w-ful bg-white h-full relative overflow-hidden">
             <div
-                className={`fixed mt-4  bg-white border border-gray-400/50 shadow-xl p-2 rounded-full z-10 cursor-pointer ${open ? "ml-[12.5%]" : "ml-10 duration-300"
-                    }`}
+                className={`hidden lg:block fixed mt-9 bg-white border border-gray-400/50 shadow-xl p-2 rounded-full z-10 cursor-pointer ${
+                    open ? "ml-[12.5%]" : "ml-10 duration-300"
+                }`}
                 onClick={() => setOpen(!open)}
             >
                 {open ? (
@@ -67,7 +82,7 @@ const Sidebar = ({ open, setOpen }) => {
                     <FaChevronRight className="hover:text-gray-700 duration-300" />
                 )}
             </div>
-            <p className="text-orange-600 my-4 font-serif font-medium text-2xl">
+            <p className="text-orange-600 mt-2 mb-4 font-serif font-medium text-2xl">
                 {open ? "BlinkLink" : "B."}
             </p>
 
@@ -87,10 +102,10 @@ const Sidebar = ({ open, setOpen }) => {
                 />
             ) : (
                 <div
-                    className="w-full flex justify-center items-center bg-blue-700 p-3 py-2 rounded-sm cursor-pointer shadow-lg"
+                    className="flex justify-center items-center bg-blue-700 p-2 py-2 rounded-sm cursor-pointer shadow-lg"
                     onClick={() => setOpenPopup(!openPopup)}
                 >
-                    <MdAdd className="text-white text-xl" />
+                    <MdAdd className="text-white text-xl" size={20} />
                 </div>
             )}
 
@@ -130,9 +145,10 @@ const Item = ({ item = {}, className = "", open = false }) => {
 
     return (
         <div
-            className={`hover:bg-gray-200/70 w-full py-2 flex items-center gap-2
-        rounded-sm px-3 cursor-pointer relative ${className} ${isSelected ? "bg-blue-100 text-blue-700" : ""
-                }`}
+            className={`hover:bg-gray-200/70 w-full py-2 flex items-center gap-1
+        rounded-sm px-3 cursor-pointer relative ${className} ${
+                isSelected ? "bg-blue-100 text-blue-700" : ""
+            } ${open ? "justify-start" : "justify-center"}`}
             onClick={handleClick}
         >
             {isSelected && (
@@ -145,11 +161,26 @@ const Item = ({ item = {}, className = "", open = false }) => {
 };
 
 const CreateNewPopup = ({ open, setOpen, sideBarOpen }) => {
+    // on outside click close the popup
+    const ref = useRef();
+    const handleClick = (e) => {
+        if (ref.current && !ref.current.contains(e.target)) {
+            setOpen(!open);
+        }
+    };
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClick);
+        return () => {
+            document.removeEventListener("mousedown", handleClick);
+        };
+    }, []);
     return (
         <div
-            className={`fixed bg-white border w-40 border-gray-300/50 shadow-xl px-1 z-10  rounded-md cursor-pointer ${sideBarOpen ? "ml-[14%]" : "ml-14"
-                } `}
+            className={`fixed bg-white border w-40 border-gray-300/50 shadow-xl px-1 z-10  rounded-md cursor-pointer ${
+                sideBarOpen ? "ml-[14%]" : "ml-14"
+            } `}
             onClick={() => setOpen(!open)}
+            ref={ref}
         >
             <Item
                 item={{

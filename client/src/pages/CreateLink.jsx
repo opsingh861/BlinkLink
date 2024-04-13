@@ -176,9 +176,9 @@ const Footer = ({ url, title, backHalf }) => {
                 </div>
                 <div className="flex gap-2">
                     <Button
-                        label={"Cancel"}
+                        label="Cancel"
                         onClick={() => {}}
-                        className="bg-transparent text-blue-600 rounded-sm hover:bg-zinc-200"
+                        className="bg-transparent text-blue-600 mr-2 rounded-sm hover:bg-zinc-100"
                     />
                     <Button
                         label={loading ? "Creating" : "Create"}

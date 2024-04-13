@@ -1,6 +1,11 @@
 import PropTypes from "prop-types";
 
-const ToggleButton = ({ state, setState, disabled = false }) => {
+const ToggleButton = ({
+    state,
+    setState,
+    disabled = false,
+    sameColor = false,
+}) => {
     const toggleButton = () => {
         if (disabled) return;
 
@@ -9,9 +14,9 @@ const ToggleButton = ({ state, setState, disabled = false }) => {
 
     return (
         <button
-            className={`flex items-center justify-center relative w-12 h-6 rounded-full focus:outline-none ${
-                state ? "bg-blue-500" : "bg-gray-400"
-            } ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`}
+            className={`flex items-center justify-center relative w-12 h-6 rounded-full focus:outline-none 
+            ${sameColor ? "bg-blue-500" : state ? "bg-blue-500" : "bg-gray-400"}
+            ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`}
             onClick={toggleButton}
             type="button"
         >
@@ -28,6 +33,7 @@ ToggleButton.propTypes = {
     disabled: PropTypes.bool,
     state: PropTypes.bool.isRequired,
     setState: PropTypes.func.isRequired,
+    sameColor: PropTypes.bool,
 };
 
 export default ToggleButton;

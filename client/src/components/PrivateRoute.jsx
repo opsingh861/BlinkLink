@@ -10,16 +10,17 @@ export default function PrivateRoute() {
     // const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const isAuthenticated = true;
     return (
-        <main className="flex">
+        <main className="flex h-screen w-full">
             <section
-                className={`overflow-y-auto border-r border-gray-300 relative  ${
-                    open ? "w-[15%] " : "w-[5%] duration-300"
+                className={`overflow-y-auto border-r border-gray-300 relative min-w-16 ${
+                    open ? "w-[15%]" : "w-[5%] duration-300"
                 }`}
             >
                 <Sidebar open={open} setOpen={setOpen} />
             </section>
+
             <section
-                className={`min-h-screen max-h-screen overflow-hidden bg-[#f4f6fa] duration-300 ${
+                className={`h-full flex bg-[#f4f6fa]  flex-col overflow-hidden duration-300 ${
                     open ? "w-[85%]" : "w-[95%]"
                 }`}
             >
