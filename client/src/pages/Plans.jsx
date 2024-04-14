@@ -4,55 +4,6 @@ import PropTypes from "prop-types";
 import ToggleButton from "@/components/ToggleButton";
 import { useState } from "react";
 
-/* 
-Core
-$8/month
-annual charge of $96
-
-5 QR Codes/month
-
-100 links/month
-
-1 Link-in-bio page
-
-Upgrade to Core
-Everything in Free, plus:
-QR Code customizations
-30 days of click & scan data
-Link & QR Code redirects
-Growth
-$29/month
-annual charge of $348
-
-10 QR Codes/month
-
-500 links/month
-
-2 Link-in-bio pages
-
-Upgrade to Growth
-Everything in Core, plus:
-Complimentary custom domain*
-Branded links
-4 months of click & scan data
-Bulk link shortening
-Premium
-$199/month
-annual charge of $2,388
-
-200 QR Codes/month
-
-3,000 links/month
-
-5 Link-in-bio pages
-
-Upgrade to Premium
-Everything in Growth, plus:
-1 year of click & scan data
-Custom campaign-level tracking
-City-level & device type click & scan data
-Mobile deep linking
- */
 const planDetails = [
     {
         name: "Core",
@@ -165,7 +116,7 @@ const PlanCard = ({
     features,
 } = planDetails) => {
     return (
-        <div className="flex flex-col justify-center bg-white rounded-sm shadow-lg p-10 border w-80">
+        <div className="flex flex-col justify-center bg-white rounded-md shadow-lg p-10 border w-80">
             <h2 className="font-bold text-3xl mb-6 text-center">{name}</h2>
             <p className="text-blue-700 font-medium text-center mb-2">
                 <span className="text-5xl font-bold">${price}</span>
@@ -195,10 +146,7 @@ const PlanCard = ({
             </p>
             <div className="flex flex-col gap-1">
                 {features.map((feature, index) => (
-                    <p
-                        key={index}
-                        className="text-sm flex gap-3 items-center justify-start"
-                    >
+                    <p key={index} className="text-sm flex gap-3 items-start">
                         <BsCheck /> {feature}
                     </p>
                 ))}
