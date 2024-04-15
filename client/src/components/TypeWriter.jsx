@@ -30,7 +30,8 @@ const TypeWriter = ({ str = "BlinkLink" }) => {
                 {text}
 
                 <span
-                    className={`text-blue-900 text-6xl leading-4 ${
+
+                    className={`text-6xl leading-4 ${
                         blink ? "text-blue-900" : "text-blue-100"
                     }`}
                 >

@@ -1,6 +1,8 @@
-import BannerAd from "@/components/BannerAd";
+
 import Connections from "@/components/Connections";
 import Features from "@/components/Features";
+import FooterBanner from "@/components/FooterBanner";
+
 import Header from "@/components/Header";
 import HeroBanner from "@/components/HeroBanner";
 import { Navigate } from "react-router-dom";
@@ -17,7 +19,8 @@ const Landing = () => {
             <HeroBanner />
             <Features />
             <Connections />
-            <BannerAd />
+            <FooterBanner />
+
         </section>
     );
 };
