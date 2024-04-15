@@ -4,6 +4,7 @@ import Button from "@/components/Button";
 import Divider from "@/components/Divider";
 import InputComponent from "@/components/InputComponent";
 import OAuth from "../components/OAuth";
+import TypeWriter from "@/components/TypeWriter";
 import axiosInstance from "@/lib/axiosInstance";
 import { setUser } from "@/redux/authSlice";
 import toast from "react-hot-toast";
@@ -34,7 +35,7 @@ export default function Signin() {
             toast.success("Logged in successfully");
             navigate("/home");
         } catch (error) {
-            let errorMessage = error.response.data.message;
+            let errorMessage = error?.response?.data?.message;
             console.log(errorMessage);
             setLoading(false);
             setError("Error: " + errorMessage);
@@ -46,7 +47,7 @@ export default function Signin() {
     return (
         <section className="flex w-full h-screen bg-white">
             {/* left side */}
-            <div className="flex flex-col mx-auto justify-center w-1/3">
+            <div className="flex flex-col mx-auto justify-center w-1/3 md:w-1/2 lg:w-1/3">
                 <h1 className="text-3xl font-semibold my-7">
                     Log in and start sharing
                 </h1>
@@ -106,7 +107,9 @@ export default function Signin() {
             </div>
 
             {/* right side */}
-            <div className="hidden lg:flex w-2/5 bg-cover bg-center bg-blue-100 h-full"></div>
+            <div className="hidden lg:flex w-2/5 bg-cover bg-center bg-blue-100 h-full items-center justify-center">
+                <TypeWriter />
+            </div>
         </section>
     );
 }
