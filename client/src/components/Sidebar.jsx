@@ -61,8 +61,7 @@ const Sidebar = ({ open, setOpen }) => {
         const handleResize = () => {
             if (window.innerWidth <= 1024) {
                 setOpen(false);
-            }
-            else {
+            } else {
                 setOpen(true);
             }
         };
@@ -71,10 +70,27 @@ const Sidebar = ({ open, setOpen }) => {
             window.removeEventListener("resize", handleResize);
         };
     }, [setOpen]);
+
+    const ref = useRef();
+
+    const handleOutsideClick = (e) => {
+        // if the click is outside the `create new` button then close the popup
+        if (ref.current && !ref.current.contains(e.target)) {
+            setOpenPopup(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleOutsideClick);
+        return () => {
+            document.removeEventListener("mousedown", handleOutsideClick);
+        };
+    }, []);
+
     return (
         <section className="px-4 w-ful bg-white h-full relative overflow-hidden">
             <div
-                className={`hidden lg:block fixed mt-9 bg-white border border-gray-400/50 shadow-xl p-2 rounded-full z-10 cursor-pointer ${
+                className={`hidden lg:block fixed mt-8 bg-white border border-gray-400/50 shadow-xl p-2 rounded-full z-40 cursor-pointer ${
                     open ? "ml-[12.5%]" : "ml-10 duration-300"
                 }`}
                 onClick={() => setOpen(!open)}
@@ -85,32 +101,37 @@ const Sidebar = ({ open, setOpen }) => {
                     <FaChevronRight className="hover:text-gray-700 duration-300" />
                 )}
             </div>
-            <p className="text-orange-600 mt-2 mb-4 font-serif font-medium text-2xl">
+
+            <p className="text-orange-600 my-4 font-serif font-medium text-2xl">
                 {open ? "BlinkLink" : "B."}
             </p>
 
-            {openPopup && (
-                <CreateNewPopup
-                    open={openPopup}
-                    setOpen={setOpenPopup}
-                    sideBarOpen={open}
-                />
-            )}
-
-            {open ? (
-                <Button
-                    label="Create New"
-                    onClick={() => setOpenPopup(!openPopup)}
-                    className="w-full bg-blue-600 text-white rounded-sm hover:bg-blue-700"
-                />
-            ) : (
-                <div
-                    className="flex justify-center items-center bg-blue-700 p-2 py-2 rounded-sm cursor-pointer shadow-lg"
-                    onClick={() => setOpenPopup(!openPopup)}
-                >
-                    <MdAdd className="text-white text-xl" size={20} />
-                </div>
-            )}
+            <div className="flex flex-col" ref={ref}>
+                {/* popup to show options */}
+                {openPopup && (
+                    <CreateNewPopup
+                        open={openPopup}
+                        setOpen={setOpenPopup}
+                        sideBarOpen={open}
+                    />
+                )}
+                {open ? (
+                    <Button
+                        label="Create New"
+                        onClick={() => {
+                            setOpenPopup(!openPopup);
+                        }}
+                        className="w-full bg-blue-600 text-white rounded-sm hover:bg-blue-700 whitespace-nowrap"
+                    />
+                ) : (
+                    <div
+                        className="flex justify-center items-center bg-blue-700 p-2 py-2 rounded-sm cursor-pointer shadow-lg"
+                        onClick={() => setOpenPopup(!openPopup)}
+                    >
+                        <MdAdd className="text-white text-xl" size={20} />
+                    </div>
+                )}
+            </div>
 
             <Divider className="mt-4 mb-2" />
             <div className="flex flex-col items-start gap-4">
@@ -164,26 +185,28 @@ const Item = ({ item = {}, className = "", open = false }) => {
 };
 
 const CreateNewPopup = ({ open, setOpen, sideBarOpen }) => {
-    // on outside click close the popup
-    const ref = useRef();
-    const handleClick = (e) => {
-        if (ref.current && !ref.current.contains(e.target)) {
-            setOpen(!open);
-        }
-    };
-    useEffect(() => {
-        document.addEventListener("mousedown", handleClick);
-        return () => {
-            document.removeEventListener("mousedown", handleClick);
-        };
-    }, []);
+    // // on outside click close the popup
+    // const ref = useRef();
+    // const handleOutsideClick = (e) => {
+    //     // if the click is outside the ref element then close the popup
+    //     if (ref.current && !ref.current.contains(e.target)) {
+    //         console.log("setting false");
+    //         setOpen(false);
+    //     }
+    // };
+    // useEffect(() => {
+    //     document.addEventListener("mousedown", handleOutsideClick);
+    //     return () => {
+    //         document.removeEventListener("mousedown", handleOutsideClick);
+    //     };
+    // }, []);
     return (
         <div
-            className={`fixed bg-white border w-40 border-gray-300/50 shadow-xl px-1 z-10  rounded-md cursor-pointer ${
+            className={`fixed bg-white border w-40 mt-1 shadow-xl px-1 z-10  rounded-md cursor-pointer ${
                 sideBarOpen ? "ml-[14%]" : "ml-14"
             } `}
             onClick={() => setOpen(!open)}
-            ref={ref}
+            // ref={ref}
         >
             <Item
                 item={{

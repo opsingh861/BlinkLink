@@ -9,9 +9,9 @@ export default function PrivateRoute() {
     const [open, setOpen] = useState(true);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     return (
-        <main className="flex h-screen w-full">
+        <main className="flex h-screen overflow-hidden">
             <section
-                className={`overflow-y-auto border-r border-gray-300 relative min-w-16 ${
+                className={`border-r border-gray-300 relative min-w-16 ${
                     open ? "w-[15%]" : "w-[5%] duration-300"
                 }`}
             >

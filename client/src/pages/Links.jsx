@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Divider from "@/components/Divider";
 import EmptyComponent from "@/components/EmptyComponent";
-import LinkItemComponent from "@/components/LinkItemComponent";
+import LinkItem from "@/components/LinkItem";
 import { fetchLinks } from "@/redux/linksSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -39,7 +39,7 @@ const Links = () => {
     }
     return (
         <section className="rounded-sm mt-10 overflow-y-auto">
-            <div className="mx-auto w-4/5">
+            <div className="mx-auto w-11/12">
                 <div className="mb-5">
                     <h1 className="font-bold text-4xl mt-4 mb-2 sticky">
                         Links
@@ -47,7 +47,7 @@ const Links = () => {
                     <Divider className="mb-4" />
                     <div className="flex flex-col gap-4">
                         {items.map((item, index) => (
-                            <LinkItemComponent
+                            <LinkItem
                                 key={index}
                                 title={item.title}
                                 shortUrl={item.shortUrl}

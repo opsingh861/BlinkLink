@@ -1,8 +1,14 @@
+import { CiCalendar } from "react-icons/ci";
 import PropTypes from "prop-types";
+import { RiCursorFill } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-const LinkItemComponent = ({ title, shortUrl, url, date, iconUrl, clicks }) => {
+
+const LinkItem = ({ title, shortUrl, url, date, iconUrl, clicks }) => {
     const fullUrl = `http://localhost:3000/${shortUrl}`;
     const [copySuccess, setCopySuccess] = useState(false);
+    const navigation = useNavigate();
+
     const copyToClipboard = () => {
         navigator.clipboard
             .writeText(fullUrl)
@@ -28,16 +34,27 @@ const LinkItemComponent = ({ title, shortUrl, url, date, iconUrl, clicks }) => {
             </div>
 
             <div className="flex flex-col overflow-hidden whitespace-nowrap overflow-ellipsis gap-1 flex-1">
-                <h1 className="font-bold text-lg mb-1">{title}</h1>
-                <p className="text-base text-blue-400">
+                <h1
+                    className="font-bold text-xl mb-1 capitalize cursor-pointer hover:underline"
+                    onClick={() => navigation(`/links/${title}`)}
+                >
+                    {title}
+                </h1>
+                <p className="font-medium text-blue-700 hover:underline">
                     <a href={fullUrl} target="_blank" rel="noopener noreferrer">
                         {fullUrl}
                     </a>
                 </p>
-                <p className="text-sm font-light">{url}</p>
+                <p className="text-sm font-light cursor-pointer hover:underline">
+                    {url}
+                </p>
                 <div className="flex font-normal mt-2 text-sm space-x-4">
-                    <p className="">Clicks: {clicks}</p>
-                    <p className="">
+                    <p className="flex items-center gap-1">
+                        <RiCursorFill />
+                        Clicks: {clicks}
+                    </p>
+                    <p className="flex items-center gap-1">
+                        <CiCalendar />
                         {new Date(date).toLocaleDateString("en-IN", {
                             year: "numeric",
                             month: "short",
@@ -59,7 +76,7 @@ const LinkItemComponent = ({ title, shortUrl, url, date, iconUrl, clicks }) => {
     );
 };
 
-LinkItemComponent.propTypes = {
+LinkItem.propTypes = {
     title: PropTypes.string.isRequired,
     shortUrl: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
@@ -68,4 +85,4 @@ LinkItemComponent.propTypes = {
     clicks: PropTypes.number.isRequired,
 };
 
-export default LinkItemComponent;
+export default LinkItem;

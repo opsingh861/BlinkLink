@@ -25,7 +25,7 @@ const Home = () => {
         },
     ];
     return (
-        <section className="bg-[#f4f6fa] w-full min-h-screen px-8 py-6">
+        <section className="bg-[#f4f6fa] w-full h-full px-8 py-6 overflow-y-auto">
             <div className="flex justify-between items-center">
                 <h1 className="font-bold text-4xl my-5">
                     Your Connections Platform

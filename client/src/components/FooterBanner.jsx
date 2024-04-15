@@ -1,7 +1,7 @@
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
 
-const BannerAd = () => {
+const FooterBanner = () => {
     const navigation = useNavigate();
     return (
         <section className="flex flex-col gap-4 items-center pt-14 pb-20 bg-blue-950">
@@ -17,4 +17,4 @@ const BannerAd = () => {
     );
 };
 
-export default BannerAd;
+export default FooterBanner;
