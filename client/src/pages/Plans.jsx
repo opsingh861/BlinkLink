@@ -1,6 +1,8 @@
 import { BsCheck } from "react-icons/bs";
 import Button from "@/components/Button";
+import Divider from "@/components/Divider";
 import PropTypes from "prop-types";
+import { RxCross2 } from "react-icons/rx";
 import ToggleButton from "@/components/ToggleButton";
 import { useState } from "react";
 
@@ -51,7 +53,22 @@ const planDetails = [
 const Plans = () => {
     const [isMonthly, setIsMonthly] = useState(true);
     return (
-        <section className="flex flex-col h-full pt-12">
+        <section className="flex flex-col h-full pt-4">
+            {/* navbar */}
+            <div className="flex flex-col items-center justify-between px-20 py-4 bg-white shadow-md">
+                <div className="flex items-center justify-between w-full py-4 ">
+                    <h1 className="text-4xl font-sans font-semibold cursor-pointer bg-gradient-to-r from-pink-700 via-orange-500 to-red-600 bg-clip-text text-transparent">
+                        BlinkLink
+                    </h1>
+                    <div
+                        className="flex items-center justify-center hover:bg-gray-100 duration-200 rounded-full p-2 cursor-pointer"
+                        onClick={() => window.history.back()}
+                    >
+                        <RxCross2 size={24} />
+                    </div>
+                </div>
+                <Divider />
+            </div>
             {/* header area */}
             <div className="flex flex-col items-center justify-center gap-6 bg-white pb-20">
                 <h1 className="font-bold text-4xl text-center w-3/4 mx-auto">

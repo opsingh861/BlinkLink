@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Analytics from "./pages/Analytics";
-import ComingSoon from "./pages/ComingSoon.jsx"; // Import your Not Found component
 import CreateLink from "./pages/CreateLink";
 import CreateQR from "./pages/CreateQR";
 import Error404 from "./pages/Error404";
@@ -15,11 +14,8 @@ import Qrcode from "./pages/Qrcode";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import { Toaster } from "react-hot-toast";
-import { useSelector } from "react-redux";
 
 function App() {
-    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
     return (
         <div>
             <Toaster position="top-right" reverseOrder={false} />
@@ -30,9 +26,7 @@ function App() {
                     <Route path="/sign-up" element={<Signup />} />
                     <Route path="/sign-in" element={<Signin />} />
                     <Route path="/plans" element={<Plans />} />
-                    {isAuthenticated ? null : (
-                        <Route path="*" element={<Error404 />} />
-                    )}
+                    <Route path="*" element={<Error404 />} />
 
                     <Route element={<PrivateRoute />}>
                         <Route path="/home" element={<Home />} />
@@ -42,7 +36,6 @@ function App() {
                         <Route path="/qrcode" element={<Qrcode />} />
                         <Route path="/qrcode/create" element={<CreateQR />} />
                         <Route path="/analytics" element={<Analytics />} />
-                        <Route path="*" element={<ComingSoon />} />
                     </Route>
                 </Routes>
             </BrowserRouter>
