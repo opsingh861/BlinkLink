@@ -18,10 +18,6 @@ const linkSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    qrId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'QrCode'
-    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

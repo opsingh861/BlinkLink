@@ -20,13 +20,25 @@ const signup = async (req, res, next) => {
             username,
             email,
             password: hashedPassword
-        });
+        }); // This is where you have 'F' character which might be causing the issue
         await user.save();
-        res.status(201).json({ message: 'User created successfully' });
+        const token = jwt.sign({ id: user._id, username: user.username }, process.env.JWT_SECRET);
+        
+        // Ensure validUser is properly defined with the password property
+        const { password: userPassword, ...rest } = user._doc;
+        
+        const expiryDate = new Date(Date.now() + 3600000); // 1 hour
+        console.log(token)
+        return res.cookie('access_token', token, {
+            httpOnly: true,
+            expires: expiryDate,
+        })
+            .status(201).json({ data: rest, message: 'User created successfully' });
     } catch (error) {
         next(errorHandler(400, error.message));
     }
 };
+
 
 const login = async (req, res, next) => {
     const { email, password } = req.body;

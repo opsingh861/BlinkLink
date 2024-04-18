@@ -5,10 +5,10 @@ const qrCodeSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    urlId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Url',
-        required: true
+    shortUrl: {
+        type: String,
+        required: true,
+        unique: true
     },
     qrCode: {
         type: String,

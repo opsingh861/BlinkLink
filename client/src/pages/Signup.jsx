@@ -29,11 +29,13 @@ export default function Signup() {
             const res = await axiosInstance.post("/auth/signup", formData, {
                 withCredentials: true,
             });
-            dispatch(setUser(res.data));
+            console.log(res.data.data);
+            dispatch(setUser(res.data.data));
             setLoading(false);
             toast.success("Logged in successfully");
             navigate("/home");
         } catch (error) {
+            console.log(error);
             let errorMessage = error?.response?.data?.message;
             console.log(errorMessage);
             setLoading(false);
@@ -59,6 +61,25 @@ export default function Signup() {
                 </div>
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                    <label htmlFor="name" className="text-base font-medium">
+                        Name
+                    </label>
+                    <InputComponent
+                        type="text"
+                        id="name"
+                        onChange={handleChange}
+                        value={formData.name}
+                    />
+
+                    <label htmlFor="username" className="text-base font-medium">
+                        Username
+                    </label>
+                    <InputComponent
+                        type="text"
+                        id="username"
+                        onChange={handleChange}
+                        value={formData.username}
+                    />
                     <label htmlFor="email" className="text-base font-medium">
                         Email
                     </label>
@@ -68,7 +89,6 @@ export default function Signup() {
                         onChange={handleChange}
                         value={formData.email}
                     />
-
                     <label htmlFor="password" className="text-base font-medium">
                         Password
                     </label>
