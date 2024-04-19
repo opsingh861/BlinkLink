@@ -23,10 +23,10 @@ const signup = async (req, res, next) => {
         }); // This is where you have 'F' character which might be causing the issue
         await user.save();
         const token = jwt.sign({ id: user._id, username: user.username }, process.env.JWT_SECRET);
-        
+
         // Ensure validUser is properly defined with the password property
         const { password: userPassword, ...rest } = user._doc;
-        
+
         const expiryDate = new Date(Date.now() + 3600000); // 1 hour
         console.log(token)
         return res.cookie('access_token', token, {
@@ -81,17 +81,16 @@ const google = async (req, res, next) => {
                 Math.random().toString(36).slice(-8) +
                 Math.random().toString(36).slice(-8);
             const hashedPassword = await bcrypt.hash(generatedPassword, 10);
+            const username = req.body.name.split(' ').join('').toLowerCase() + Math.random().toString(36).slice(-8)
             const newUser = new User({
                 name: req.body.name,
-                username:
-                    req.body.name.split(' ').join('').toLowerCase() +
-                    Math.random().toString(36).slice(-8),
+                username,
                 email: req.body.email,
                 password: hashedPassword,
                 profilePicture: req.body.photo,
             });
             await newUser.save();
-            const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+            const token = jwt.sign({ id: newUser._id, username }, process.env.JWT_SECRET);
             const { password: hashedPassword2, ...rest } = newUser._doc;
             const expiryDate = new Date(Date.now() + 3600000); // 1 hour
             res

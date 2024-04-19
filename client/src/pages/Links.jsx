@@ -6,6 +6,7 @@ import LinkItem from "@/components/LinkItem";
 import { fetchLinks } from "@/redux/linksSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Loader from "@/components/Loader";
 
 const Links = () => {
     const dispatch = useDispatch();
@@ -20,6 +21,15 @@ const Links = () => {
             dispatch(fetchLinks());
         }
     }, [dispatch, isEmpty]);
+
+    if (isLoading) {
+        // Show loading indicator while data is being fetched
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Loader />
+            </div>
+        );
+    }
 
     if (isEmpty) {
         return (

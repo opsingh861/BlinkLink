@@ -81,9 +81,8 @@ const Plans = () => {
                 </p>
                 <div className="flex items-center justify-center gap-4">
                     <span
-                        className={`text-sm font-semibold py-1 px-3 bg-gray-200 rounded-md ${
-                            !isMonthly ? "bg-green-100 text-emerald-600" : ""
-                        }`}
+                        className={`text-sm font-semibold py-1 px-3 bg-gray-200 rounded-md ${!isMonthly ? "bg-green-100 text-emerald-600" : ""
+                            }`}
                     >
                         Save up to 34%
                     </span>
@@ -157,8 +156,8 @@ const PlanCard = ({
                 {name === "Core"
                     ? "Free"
                     : name === "Growth"
-                    ? "Core"
-                    : "Growth"}
+                        ? "Core"
+                        : "Growth"}
                 , plus:
             </p>
             <div className="flex flex-col gap-1">

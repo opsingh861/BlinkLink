@@ -17,7 +17,7 @@ app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 // API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/links', verifyToken, linkRoutes);
-app.use('/api/qr', qrRoute);
+app.use('/api/qr', verifyToken, qrRoute);
 
 // Default route
 app.get('/', (req, res) => {

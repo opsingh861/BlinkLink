@@ -1,7 +1,13 @@
 const mongoose = require('mongoose');
 
+
+
 const qrCodeSchema = new mongoose.Schema({
     properties: {
+        type: Object,
+        required: true
+    },
+    url: {
         type: String,
         required: true
     },
@@ -10,7 +16,7 @@ const qrCodeSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    qrCode: {
+    title: {
         type: String,
         required: true
     },

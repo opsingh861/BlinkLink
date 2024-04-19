@@ -1,11 +1,26 @@
 import { CiCalendar } from "react-icons/ci";
 import PropTypes from "prop-types";
 import { RiCursorFill } from "react-icons/ri";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import QRCodeStyling from "qr-code-styling";
 
-const QrCodeItem = ({ title, shortUrl, url, date, iconUrl, clicks }) => {
+const QrCodeItem = ({ title, shortUrl, url, date, property }) => {
     const fullUrl = `http://localhost:3000/${shortUrl}`;
     const [copySuccess, setCopySuccess] = useState(false);
+    const ref = useRef(null);
+    console.log(property.width, property.height, property.data)
+    
+    const qrCode = new QRCodeStyling({});
+    useEffect(() => {
+        qrCode.append(ref.current);
+    }, []);
+    
+    useEffect(() => {
+        qrCode.update({
+            data: fullUrl,
+            width:92,
+            height:92});
+    }, [fullUrl]);
 
     const copyToClipboard = () => {
         navigator.clipboard
@@ -23,12 +38,8 @@ const QrCodeItem = ({ title, shortUrl, url, date, iconUrl, clicks }) => {
     };
     return (
         <section className="px-6 py-4 flex items-start justify-between gap-4 bg-white rounded-xl">
-            <div className="h-20 w-20 border border-gray-300 flex items-center justify-center">
-                <img
-                    src={iconUrl}
-                    alt="icon"
-                    className="h-full w-full object-cover"
-                />
+            <div className="h-24 w-24 border border-gray-300 flex items-center justify-center">
+                <span ref={ref} className="h-full w-full object-cover" />
             </div>
 
             <div className="flex flex-col overflow-hidden whitespace-nowrap overflow-ellipsis gap-1 flex-1">
@@ -44,10 +55,7 @@ const QrCodeItem = ({ title, shortUrl, url, date, iconUrl, clicks }) => {
                     {url}
                 </p>
                 <div className="flex font-normal mt-2 text-sm space-x-4">
-                    <p className="flex items-center gap-1">
-                        <RiCursorFill />
-                        Clicks: {clicks}
-                    </p>
+
                     <p className="flex items-center gap-1">
                         <CiCalendar />
                         {new Date(date).toLocaleDateString("en-IN", {
@@ -76,8 +84,7 @@ QrCodeItem.propTypes = {
     shortUrl: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
     date: PropTypes.number.isRequired,
-    iconUrl: PropTypes.string,
-    clicks: PropTypes.number.isRequired,
+    property: PropTypes.object.isRequired
 };
 
 export default QrCodeItem;

@@ -1,9 +1,10 @@
 const express = require('express');
+const { createQrCode, getQrCodes } = require('../controllers/qr.controller');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.send('Hello World');
-});
+
+router.post('/create', createQrCode);
+router.get('/getQrs', getQrCodes)
 
 module.exports = router;

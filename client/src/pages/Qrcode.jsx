@@ -2,11 +2,32 @@ import Divider from "@/components/Divider";
 import EmptyComponent from "@/components/EmptyComponent";
 import QrCodeItem from "@/components/QrCodeItem";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchQrs } from "@/redux/qrSlice";
+import { useEffect } from "react";
+import Loader from "@/components/Loader";
 
 const Links = () => {
     const navigation = useNavigate();
+    const dispatch = useDispatch();
 
-    const isEmpty = false;
+    const { items, isLoading, error } = useSelector((state) => state.qrs);
+    const isEmpty = items.length === 0;
+    useEffect(() => {
+        // Check if items are empty before fetching
+        if (isEmpty) {
+            dispatch(fetchQrs());
+        }
+    }, [dispatch, isEmpty]);
+
+    if (isLoading) {
+        // Show loading indicator while data is being fetched
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Loader />
+            </div>
+        );
+    }
 
     if (isEmpty) {
         return (
@@ -26,32 +47,6 @@ const Links = () => {
         );
     }
 
-    const items = [
-        {
-            title: "Google",
-            shortUrl: "google",
-            url: "https://www.google.com",
-            clicks: 100,
-            createdAt: "2021-08-01T00:00:00.000Z",
-            logo: "src/assets/qrcode.svg",
-        },
-        {
-            title: "Facebook",
-            shortUrl: "facebook",
-            url: "https://www.facebook.com",
-            clicks: 200,
-            createdAt: "2021-08-01T00:00:00.000Z",
-            logo: "src/assets/qrcode.svg",
-        },
-        {
-            title: "Twitter",
-            shortUrl: "twitter",
-            url: "https://www.twitter.com",
-            clicks: 300,
-            createdAt: "2021-08-01T00:00:00.000Z",
-            logo: "src/assets/qrcode.svg",
-        },
-    ];
     return (
         <section className="rounded-sm mt-10 overflow-y-auto">
             <div className="mx-auto w-4/5">
@@ -61,15 +56,15 @@ const Links = () => {
                     </h1>
                     <Divider className="mb-4" />
                     <div className="flex flex-col gap-4">
+                        {console.log(items)}
                         {items.map((item, index) => (
                             <QrCodeItem
                                 key={index}
                                 title={item.title}
                                 shortUrl={item.shortUrl}
                                 url={item.url}
-                                clicks={item.clicks}
                                 date={Date.parse(item.createdAt)}
-                                iconUrl={item.logo}
+                                property={item.properties}
                             />
                         ))}
                     </div>
