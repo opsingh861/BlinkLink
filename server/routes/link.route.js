@@ -1,5 +1,5 @@
 const express = require('express');
-const { shortenLink, deleteLink, updateLink, getLinks } = require('../controllers/link.controller');
+const { shortenLink, deleteLink, updateLink, getLinks, getLinkDetails } = require('../controllers/link.controller');
 
 const router = express.Router();
 
@@ -11,5 +11,6 @@ const router = express.Router();
 router.post('/shorten', shortenLink);
 router.delete('/:shortUrl', deleteLink);
 router.put('/:shortUrl', updateLink);
+router.get("/linkdetails/:shortUrl", getLinkDetails);
 router.get('/getlinks', getLinks);
 module.exports = router;

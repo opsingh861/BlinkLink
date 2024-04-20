@@ -155,10 +155,27 @@ async function getLinks(req, res, next) {
     }
 }
 
+async function getLinkDetails(req, res, next) {
+    const { shortUrl } = req.params;
+    try {
+        const link = await
+            Link.findOne({ shortUrl });
+        if (!link) {
+            return next(errorHandler(404, 'Link not found'));
+        }
+        res.status(200).json({ link });
+    }
+    catch (error) {
+        console.error(error);
+        next(errorHandler(400, error.message));
+    }
+}
+
 module.exports = {
     shortenLink,
     redirectToOriginalLink,
     deleteLink,
     updateLink,
-    getLinks
+    getLinks,
+    getLinkDetails
 };
