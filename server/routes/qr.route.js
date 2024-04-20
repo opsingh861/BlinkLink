@@ -1,10 +1,14 @@
-const express = require('express');
-const { createQrCode, getQrCodes } = require('../controllers/qr.controller');
+const express = require("express")
+const {
+    createQrCode,
+    getQrCodes,
+    getQrCode,
+} = require("../controllers/qr.controller")
 
-const router = express.Router();
+const router = express.Router()
 
+router.post("/create", createQrCode)
+router.get("/getQrs", getQrCodes)
+router.get("/getQr/:shortUrl", getQrCode)
 
-router.post('/create', createQrCode);
-router.get('/getQrs', getQrCodes)
-
-module.exports = router;
+module.exports = router
