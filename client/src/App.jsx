@@ -15,6 +15,8 @@ import Qrcode from "./pages/Qrcode";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import { Toaster } from "react-hot-toast";
+import PasteBin from "./pages/PasteBin";
+import Campaigns from "./pages/campaigns";
 
 function App() {
     return (
@@ -44,6 +46,8 @@ function App() {
                             element={<QrDetail />}
                         />
                         <Route path="/analytics" element={<Analytics />} />
+                        <Route path="/pastebin" element={<PasteBin />} />
+                        <Route path="/campaigns" element={<Campaigns />} />
                     </Route>
                 </Routes>
             </BrowserRouter>

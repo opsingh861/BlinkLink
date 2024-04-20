@@ -49,8 +49,8 @@ const Sidebar = ({ open, setOpen }) => {
             icon: <MdOutlineCampaign />,
         },
         {
-            label: "Custom links",
-            route: "/custom-links",
+            label: "Pastebin",
+            route: "/pastebin",
             icon: <MdOutlineAddLink />,
         },
     ];
