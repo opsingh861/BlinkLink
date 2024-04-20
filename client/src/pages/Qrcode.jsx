@@ -1,13 +1,15 @@
+import { useDispatch, useSelector } from "react-redux";
+
 import Divider from "@/components/Divider";
 import EmptyComponent from "@/components/EmptyComponent";
+import Error404 from "./Error404";
+import Loader from "@/components/Loader";
 import QrCodeItem from "@/components/QrCodeItem";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { fetchQrs } from "@/redux/qrSlice";
 import { useEffect } from "react";
-import Loader from "@/components/Loader";
+import { useNavigate } from "react-router-dom";
 
-const Links = () => {
+const QrCode = () => {
     const navigation = useNavigate();
     const dispatch = useDispatch();
 
@@ -47,16 +49,17 @@ const Links = () => {
         );
     }
 
+    if (error) return <Error404 />;
+
     return (
         <section className="rounded-sm mt-10 overflow-y-auto">
-            <div className="mx-auto w-4/5">
+            <div className="mx-auto w-11/12">
                 <div className="mb-5">
                     <h1 className="font-bold text-4xl mt-4 mb-2 sticky">
                         QR Codes
                     </h1>
                     <Divider className="mb-4" />
                     <div className="flex flex-col gap-4">
-                        {console.log(items)}
                         {items.map((item, index) => (
                             <QrCodeItem
                                 key={index}
@@ -81,4 +84,4 @@ const Links = () => {
     );
 };
 
-export default Links;
+export default QrCode;

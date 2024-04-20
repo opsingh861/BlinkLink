@@ -1,27 +1,27 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux"
 
-import Divider from "@/components/Divider";
-import EmptyComponent from "@/components/EmptyComponent";
-import Error404 from "./Error404";
-import LinkItem from "@/components/LinkItem";
-import Loader from "@/components/Loader";
-import { fetchLinks } from "@/redux/linksSlice";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import Divider from "@/components/Divider"
+import EmptyComponent from "@/components/EmptyComponent"
+import Error404 from "./Error404"
+import LinkItem from "@/components/LinkItem"
+import Loader from "@/components/Loader"
+import { fetchLinks } from "@/redux/linksSlice"
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
 const Links = () => {
-    const dispatch = useDispatch();
-    const navigation = useNavigate();
+    const dispatch = useDispatch()
+    const navigation = useNavigate()
 
-    const { items, isLoading, error } = useSelector((state) => state.links);
-    const isEmpty = items.length === 0;
+    const { items, isLoading, error } = useSelector((state) => state.links)
+    const isEmpty = items.length === 0
 
     useEffect(() => {
         // Check if items are empty before fetching
         if (isEmpty) {
-            dispatch(fetchLinks());
+            dispatch(fetchLinks())
         }
-    }, [dispatch, isEmpty]);
+    }, [dispatch, isEmpty])
 
     if (isLoading) {
         // Show loading indicator while data is being fetched
@@ -29,11 +29,11 @@ const Links = () => {
             <div className="flex justify-center items-center h-screen">
                 <Loader />
             </div>
-        );
+        )
     }
 
     if (error) {
-        return <Error404 />;
+        return <Error404 />
     }
 
     if (isEmpty) {
@@ -45,12 +45,12 @@ const Links = () => {
                 button={{
                     label: "Get Started",
                     onClick: () => {
-                        navigation("create");
+                        navigation("create")
                     },
                 }}
                 scta={{ label: "Learn more" }}
             />
-        );
+        )
     }
     return (
         <section className="rounded-sm mt-10 overflow-y-auto">
@@ -83,7 +83,7 @@ const Links = () => {
                 </div>
             </div>
         </section>
-    );
-};
+    )
+}
 
-export default Links;
+export default Links

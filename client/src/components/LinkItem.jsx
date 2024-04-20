@@ -1,7 +1,11 @@
+import Button from "./Button";
 import { CiCalendar } from "react-icons/ci";
+import { Cross1Icon } from "@radix-ui/react-icons";
 import { FaTrash } from "react-icons/fa";
+import InputComponent from "./InputComponent";
 import { IoIosCopy } from "react-icons/io";
 import { MdEdit } from "react-icons/md";
+import ModalLayout from "@/layouts/ModalLayout";
 import PropTypes from "prop-types";
 import { RiCursorFill } from "react-icons/ri";
 import axiosInstance from "@/lib/axiosInstance";
@@ -22,6 +26,8 @@ const LinkItem = ({
 }) => {
     const fullUrl = `http://localhost:3000/${shortUrl}`;
     const [copySuccess, setCopySuccess] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [newTitle, setNewTitle] = useState(title);
     const navigation = useNavigate();
     const dispatch = useDispatch();
 
@@ -54,7 +60,25 @@ const LinkItem = ({
     };
 
     const handleEdit = () => {
-        navigation(`/links/edit/${shortUrl}`);
+        setShowEditModal(true);
+    };
+
+    const handleSave = () => {
+        const url = `/links/${shortUrl}`;
+
+        axiosInstance
+            .put(url, {
+                title: newTitle,
+            })
+            .then(() => {
+                setShowEditModal(false);
+                toast.success("Link updated successfully");
+                dispatch(fetchLinks());
+            })
+            .catch((error) => {
+                console.error("Failed to update link:", error);
+                toast.error("Failed to update link");
+            });
     };
     return (
         <section className="px-6 py-4 flex items-start justify-between gap-4 bg-white rounded-xl">
@@ -121,6 +145,69 @@ const LinkItem = ({
                     Delete
                 </p>
             </div>
+            {showEditModal && (
+                <ModalLayout>
+                    <div className="flex flex-col gap-4">
+                        <div className="flex items-center justify-between">
+                            <h1 className="text-xl font-bold">Edit Link</h1>
+                            <button onClick={() => setShowEditModal(false)}>
+                                <Cross1Icon />
+                            </button>
+                        </div>
+                        <label className="flex flex-col gap-2">
+                            <span className="font-semibold">Title</span>
+                            <InputComponent
+                                type="text"
+                                placeholder="Title"
+                                value={newTitle}
+                                onChange={(e) => setNewTitle(e.target.value)}
+                            />
+                        </label>
+                        <div className="flex items-center gap-4 ">
+                            <div className="flex flex-col items-start gap-2 w-1/2">
+                                <p className="font-medium">Domain</p>
+                                <InputComponent
+                                    label="Title"
+                                    placeholder=""
+                                    value={"blinklink.in"}
+                                    readOnly
+                                    className="text-base w-full"
+                                />
+                            </div>
+                            <p className="mt-auto mb-3">/</p>
+                            <div className="flex flex-col items-start gap-2 w-1/2">
+                                <p className="font-medium">
+                                    Custom back-half{" "}
+                                    <span className="font-light">
+                                        (optional)
+                                    </span>
+                                </p>
+
+                                <InputComponent
+                                    label="Back-half"
+                                    placeholder=""
+                                    className="text-base w-full"
+                                    readOnly
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex justify-end gap-2">
+                            <Button
+                                type="button"
+                                onClick={() => setShowEditModal(false)}
+                                label="Cancel"
+                                className="rounded-sm hover:bg-gray-100 border"
+                            />
+                            <Button
+                                label={"Save"}
+                                className="bg-blue-600 text-white rounded-sm hover:bg-blue-700"
+                                onClick={handleSave}
+                            />
+                        </div>
+                    </div>
+                </ModalLayout>
+            )}
         </section>
     );
 };

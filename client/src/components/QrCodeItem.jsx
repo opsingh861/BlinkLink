@@ -1,16 +1,19 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
 
 import { CiCalendar } from "react-icons/ci";
 import PropTypes from "prop-types";
 import QRCodeStyling from "qr-code-styling";
+import { useNavigate } from "react-router-dom";
 
 const QrCodeItem = ({ title, shortUrl, url, date, property }) => {
     const fullUrl = `http://localhost:3000/${shortUrl}`;
     const [copySuccess, setCopySuccess] = useState(false);
     const ref = useRef(null);
-    console.log(property.width, property.height, property.data);
+    const navigation = useNavigate();
 
     const qrCode = new QRCodeStyling({});
+
     useEffect(() => {
         qrCode.append(ref.current);
     }, []);
@@ -44,7 +47,12 @@ const QrCodeItem = ({ title, shortUrl, url, date, property }) => {
             </div>
 
             <div className="flex flex-col overflow-hidden whitespace-nowrap overflow-ellipsis gap-1 flex-1">
-                <h1 className="font-bold text-xl mb-1 capitalize cursor-pointer hover:underline">
+                <h1
+                    className="font-bold text-xl mb-1 capitalize cursor-pointer hover:underline"
+                    onClick={() => {
+                        navigation(`/qrcode/${shortUrl}`);
+                    }}
+                >
                     {title}
                 </h1>
                 <p className="font-medium text-blue-700 hover:underline">
