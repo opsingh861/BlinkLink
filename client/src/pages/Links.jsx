@@ -2,11 +2,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Divider from "@/components/Divider";
 import EmptyComponent from "@/components/EmptyComponent";
+import Error404 from "./Error404";
 import LinkItem from "@/components/LinkItem";
+import Loader from "@/components/Loader";
 import { fetchLinks } from "@/redux/linksSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Loader from "@/components/Loader";
 
 const Links = () => {
     const dispatch = useDispatch();
@@ -29,6 +30,10 @@ const Links = () => {
                 <Loader />
             </div>
         );
+    }
+
+    if (error) {
+        return <Error404 />;
     }
 
     if (isEmpty) {

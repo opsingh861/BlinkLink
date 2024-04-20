@@ -17,7 +17,6 @@ export default function Signup() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const handleChange = (e) => {
-        console.log(e.target.id, e.target.value);
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
 

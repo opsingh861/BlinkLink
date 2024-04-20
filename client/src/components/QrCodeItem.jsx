@@ -1,25 +1,26 @@
+import { useEffect, useRef, useState } from "react";
+
 import { CiCalendar } from "react-icons/ci";
 import PropTypes from "prop-types";
-import { RiCursorFill } from "react-icons/ri";
-import { useEffect, useRef, useState } from "react";
 import QRCodeStyling from "qr-code-styling";
 
 const QrCodeItem = ({ title, shortUrl, url, date, property }) => {
     const fullUrl = `http://localhost:3000/${shortUrl}`;
     const [copySuccess, setCopySuccess] = useState(false);
     const ref = useRef(null);
-    console.log(property.width, property.height, property.data)
-    
+    console.log(property.width, property.height, property.data);
+
     const qrCode = new QRCodeStyling({});
     useEffect(() => {
         qrCode.append(ref.current);
     }, []);
-    
+
     useEffect(() => {
         qrCode.update({
             data: fullUrl,
-            width:92,
-            height:92});
+            width: 92,
+            height: 92,
+        });
     }, [fullUrl]);
 
     const copyToClipboard = () => {
@@ -55,7 +56,6 @@ const QrCodeItem = ({ title, shortUrl, url, date, property }) => {
                     {url}
                 </p>
                 <div className="flex font-normal mt-2 text-sm space-x-4">
-
                     <p className="flex items-center gap-1">
                         <CiCalendar />
                         {new Date(date).toLocaleDateString("en-IN", {
@@ -84,7 +84,7 @@ QrCodeItem.propTypes = {
     shortUrl: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
     date: PropTypes.number.isRequired,
-    property: PropTypes.object.isRequired
+    property: PropTypes.object.isRequired,
 };
 
 export default QrCodeItem;

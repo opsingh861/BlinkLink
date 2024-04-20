@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
 import Button from "@/components/Button";
 import Divider from "@/components/Divider";
 import { FaSpinner } from "react-icons/fa";
@@ -5,14 +8,39 @@ import InputComponent from "@/components/InputComponent";
 import PropTypes from "prop-types";
 import ToggleButton from "@/components/ToggleButton";
 import axiosInstance from "@/lib/axiosInstance";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import toast from "react-hot-toast";
 
 const CreateLink = () => {
+    const { shortUrl } = useParams();
     const [destination, setDestination] = useState("");
     const [title, setTitle] = useState("");
     const [backHalf, setBackHalf] = useState(undefined);
     const [isToggled, setIsToggled] = useState(false);
+
+    const fetchLinkDetails = async () => {
+        try {
+            const response = await axiosInstance.get(
+                `/links/getDetails/${shortUrl}`
+            );
+
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    };
+
+    useEffect(() => {
+        if (shortUrl) {
+            fetchLinkDetails().then((data) => {
+                if (data) {
+                    setDestination(data.link.url);
+                    setTitle(data.link.title);
+                    setBackHalf(data.link.backHalf);
+                }
+            });
+        }
+    }, [shortUrl]);
 
     return (
         <section
@@ -155,6 +183,7 @@ const Footer = ({ url, title, backHalf }) => {
             });
             setLoading(false);
             console.log(response.data);
+            toast.success("Link created successfully");
             navigate("/links");
         } catch (error) {
             setLoading(false);

@@ -1,20 +1,37 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
+
+import Analytics from "@/pages/Analytics";
+import Error404 from "@/pages/Error404";
 import LinkItem from "@/components/LinkItem";
 import { RiArrowGoBackFill } from "react-icons/ri";
+import axiosInstance from "@/lib/axiosInstance";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 const LinkDetail = () => {
-    let { linkId } = useParams();
+    const { shortUrl } = useParams();
+    const [item, setItem] = useState(null);
 
-    console.log(linkId);
+    const fetchLinkDetail = async () => {
+        try {
+            const response = await axiosInstance.get(
+                `/links/getDetails/${shortUrl}`
+            );
 
-    const items = useSelector((state) => state.links.items);
+            setItem(response.data.link);
+        } catch (error) {
+            console.error(error);
+            setItem(null);
+        }
+    };
 
-    // let item = items.find((item) => item?.title === linkId);
-    let item = items[0];
+    useEffect(() => {
+        fetchLinkDetail();
+    }, []);
 
-    if (!item) return;
-
+    if (!item) {
+        return <Error404 />;
+    }
     return (
         <section className="rounded-sm mt-10 overflow-y-auto">
             <div className="mx-auto w-11/12">
@@ -39,15 +56,11 @@ const LinkDetail = () => {
                             clicks={item.clicks}
                             date={Date.parse(item.createdAt)}
                             iconUrl={item.logo}
+                            navigate={false}
                         />
                     </div>
-                    <div className="text-center mt-4 flex items-center justify-center">
-                        <div className="inline-block w-1/12 border-b border-black"></div>
-                        <p className="inline-block mx-2 font-light text-sm">
-                            You&apos;ve reached the end of your links
-                        </p>
-                        <div className="inline-block w-1/12 border-b border-black"></div>
-                    </div>
+
+                    <Analytics />
                 </div>
             </div>
         </section>

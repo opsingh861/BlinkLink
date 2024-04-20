@@ -3,9 +3,10 @@ import Button from "@/components/Button";
 import Divider from "@/components/Divider";
 import InputComponent from "@/components/InputComponent";
 import { IoMdLock } from "react-icons/io";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 import axiosInstance from "@/lib/axiosInstance";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const CreateQR = () => {
     const [destination, setDestination] = useState("");
@@ -111,7 +112,7 @@ const CreateQR = () => {
                 <Footer url={destination} title={title} back_half={back_half} />
             </div>
 
-            <div className="w-2/5 h-full bg-cover bg-center flex flex-col items-center pt-20 bg-[#f4f6fa] sticky top-0">
+            <div className="w-2/5 h-full bg-cover bg-center flex-col items-center pt-20 bg-[#f4f6fa] sticky top-0 hidden lg:flex">
                 <p className="text-lg font-semibold text-zinc-700 my-6">
                     Preview
                 </p>
@@ -126,119 +127,119 @@ const CreateQR = () => {
 
 const Footer = ({ url, title, backHalf }) => {
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
     const properties = {
-        "width": 300,
-        "height": 300,
-        "data": "https://qr-code-styling.com",
-        "margin": 0,
-        "qrOptions": {
-            "typeNumber": "0",
-            "mode": "Byte",
-            "errorCorrectionLevel": "Q"
+        width: 300,
+        height: 300,
+        data: "https://qr-code-styling.com",
+        margin: 0,
+        qrOptions: {
+            typeNumber: "0",
+            mode: "Byte",
+            errorCorrectionLevel: "Q",
         },
-        "imageOptions": {
-            "hideBackgroundDots": true,
-            "imageSize": 1,
-            "margin": 0
+        imageOptions: {
+            hideBackgroundDots: true,
+            imageSize: 1,
+            margin: 0,
         },
-        "dotsOptions": {
-            "type": "square",
-            "color": "#6a1a4c",
-            "gradient": {
-                "type": "linear",
-                "rotation": 1.0471975511965976,
-                "colorStops": [
+        dotsOptions: {
+            type: "square",
+            color: "#6a1a4c",
+            gradient: {
+                type: "linear",
+                rotation: 1.0471975511965976,
+                colorStops: [
                     {
-                        "offset": 0,
-                        "color": "#11a213"
+                        offset: 0,
+                        color: "#11a213",
                     },
                     {
-                        "offset": 1,
-                        "color": "#472006"
-                    }
-                ]
-            }
-        },
-        "backgroundOptions": {
-            "color": "#422ed6"
-        },
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAAAAAAAD",
-        "dotsOptionsHelper": {
-            "colorType": {
-                "single": true,
-                "gradient": false
+                        offset: 1,
+                        color: "#472006",
+                    },
+                ],
             },
-            "gradient": {
-                "linear": true,
-                "radial": false,
-                "color1": "#6a1a4c",
-                "color2": "#6a1a4c",
-                "rotation": "0"
-            }
         },
-        "cornersSquareOptions": {
-            "type": "dot",
-            "color": "#000000",
-            "gradient": {
-                "type": "linear",
-                "rotation": 0,
-                "colorStops": [
+        backgroundOptions: {
+            color: "#422ed6",
+        },
+        image: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAAAAAAAD",
+        dotsOptionsHelper: {
+            colorType: {
+                single: true,
+                gradient: false,
+            },
+            gradient: {
+                linear: true,
+                radial: false,
+                color1: "#6a1a4c",
+                color2: "#6a1a4c",
+                rotation: "0",
+            },
+        },
+        cornersSquareOptions: {
+            type: "dot",
+            color: "#000000",
+            gradient: {
+                type: "linear",
+                rotation: 0,
+                colorStops: [
                     {
-                        "offset": 0,
-                        "color": "#000000"
+                        offset: 0,
+                        color: "#000000",
                     },
                     {
-                        "offset": 1,
-                        "color": "#000000"
-                    }
-                ]
-            }
-        },
-        "cornersSquareOptionsHelper": {
-            "colorType": {
-                "single": true,
-                "gradient": false
+                        offset: 1,
+                        color: "#000000",
+                    },
+                ],
             },
-            "gradient": {
-                "linear": true,
-                "radial": false,
-                "color1": "#000000",
-                "color2": "#000000",
-                "rotation": "0"
-            }
         },
-        "cornersDotOptions": {
-            "type": "dot",
-            "color": "#000000"
-        },
-        "cornersDotOptionsHelper": {
-            "colorType": {
-                "single": true,
-                "gradient": false
+        cornersSquareOptionsHelper: {
+            colorType: {
+                single: true,
+                gradient: false,
             },
-            "gradient": {
-                "linear": true,
-                "radial": false,
-                "color1": "#000000",
-                "color2": "#000000",
-                "rotation": "0"
-            }
-        },
-        "backgroundOptionsHelper": {
-            "colorType": {
-                "single": true,
-                "gradient": false
+            gradient: {
+                linear: true,
+                radial: false,
+                color1: "#000000",
+                color2: "#000000",
+                rotation: "0",
             },
-            "gradient": {
-                "linear": true,
-                "radial": false,
-                "color1": "#ffffff",
-                "color2": "#ffffff",
-                "rotation": "0"
-            }
-        }
-    }
+        },
+        cornersDotOptions: {
+            type: "dot",
+            color: "#000000",
+        },
+        cornersDotOptionsHelper: {
+            colorType: {
+                single: true,
+                gradient: false,
+            },
+            gradient: {
+                linear: true,
+                radial: false,
+                color1: "#000000",
+                color2: "#000000",
+                rotation: "0",
+            },
+        },
+        backgroundOptionsHelper: {
+            colorType: {
+                single: true,
+                gradient: false,
+            },
+            gradient: {
+                linear: true,
+                radial: false,
+                color1: "#ffffff",
+                color2: "#ffffff",
+                rotation: "0",
+            },
+        },
+    };
     const createQR = async () => {
         setLoading(true);
         try {
@@ -246,7 +247,7 @@ const Footer = ({ url, title, backHalf }) => {
                 url: url,
                 back_half: backHalf,
                 title,
-                properties
+                properties,
             });
             setLoading(false);
             console.log(response.data);
@@ -266,7 +267,7 @@ const Footer = ({ url, title, backHalf }) => {
             <div className="flex gap-4 px-4 items-center justify-between">
                 <Button
                     label="Cancel"
-                    onClick={() => { }}
+                    onClick={() => {}}
                     className="bg-transparent text-blue-600 mr-2 rounded-sm hover:bg-zinc-100"
                 />
                 <Button
@@ -279,4 +280,9 @@ const Footer = ({ url, title, backHalf }) => {
     );
 };
 
+Footer.propTypes = {
+    url: PropTypes.string,
+    title: PropTypes.string,
+    backHalf: PropTypes.string,
+};
 export default CreateQR;
