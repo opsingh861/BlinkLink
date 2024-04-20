@@ -88,13 +88,13 @@ const LeftBanner = () => {
     const tasks = [
         "Make a short link or QR Code.",
         "Click it, scan it, or share it.",
-        "Check out Bitly Analytics.",
-        "Connect your apps with Bitly",
+        "Check out BlinkLink Analytics.",
+        "Connect your apps with BlinkLink",
     ];
     return (
         <div className="flex flex-1 flex-col p-5 bg-white rounded-md gap-1 items-start">
             <h2 className="text-xl font-semibold mb-4">
-                Getting started with Bitly
+                Getting started with BlinkLink
             </h2>
 
             <div className="flex flex-col gap-2 w-full border border-slate-200 rounded-md p-2 overflow-y-auto max-h-60 cursor-pointer">
@@ -120,7 +120,7 @@ const RightBanner = () => {
                 className="object-contain w-full h-40"
             />
             <h2 className="text-xl font-semibold">
-                Replace &apos;bit.ly&apos; with your brand.
+                Replace &apos;blinklink.ly&apos; with your brand.
             </h2>
             <p className="font-light">
                 Get a custom domain to create links that represent you. Add your

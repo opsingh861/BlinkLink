@@ -37,7 +37,7 @@ const Connections = () => {
     return (
         <section className="flex flex-col items-center py-10">
             <h2 className="text-4xl font-bold text-center text-gray-800">
-                The Bitly Connections Platform
+                The BlinkLink Connections Platform
             </h2>
             <p className="text-xl font-light text-center w-2/3 my-5">
                 All the products you need to build brand connections, manage

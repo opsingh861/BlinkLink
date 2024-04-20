@@ -73,7 +73,7 @@ const Plans = () => {
             <div className="flex flex-col items-center justify-center gap-6 bg-white pb-20">
                 <h1 className="font-bold text-4xl text-center w-3/4 mx-auto">
                     Create more meaningful, measurable experiences with the
-                    Bitly Connections Platform
+                    BlinkLink Connections Platform
                 </h1>
                 <p className="text-xl font-light text-center">
                     Upgrade to benefit so much more from your short links, QR
