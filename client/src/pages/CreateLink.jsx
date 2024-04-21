@@ -10,6 +10,8 @@ import PropTypes from "prop-types";
 import ToggleButton from "@/components/ToggleButton";
 import axiosInstance from "@/lib/axiosInstance";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { fetchLinks } from "@/redux/linksSlice";
 
 const CreateLink = () => {
     const { shortUrl } = useParams();
@@ -174,6 +176,7 @@ const CreateLink = () => {
 const Footer = ({ url, title, backHalf }) => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
     const createShortLink = async () => {
         setLoading(true);
         try {
@@ -183,8 +186,10 @@ const Footer = ({ url, title, backHalf }) => {
                 title,
             });
             setLoading(false);
+
             console.log(response.data);
             toast.success("Link created successfully");
+            dispatch(fetchLinks());
             navigate("/links");
         } catch (error) {
             setLoading(false);

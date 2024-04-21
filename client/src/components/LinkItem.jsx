@@ -52,6 +52,7 @@ const LinkItem = ({
             .then(() => {
                 dispatch(fetchLinks());
                 toast.success("Link deleted successfully");
+                navigation("/links");
             })
             .catch((error) => {
                 console.error("Failed to delete link:", error);
@@ -92,9 +93,8 @@ const LinkItem = ({
 
             <div className="flex flex-col overflow-hidden whitespace-nowrap overflow-ellipsis gap-1 flex-1">
                 <h1
-                    className={`font-bold text-xl mb-1 capitalize ${
-                        navigate ? "hover:underline cursor-pointer" : ""
-                    }`}
+                    className={`font-bold text-xl mb-1 capitalize ${navigate ? "hover:underline cursor-pointer" : ""
+                        }`}
                     onClick={() => navigate && navigation(`/links/${shortUrl}`)}
                 >
                     {title}

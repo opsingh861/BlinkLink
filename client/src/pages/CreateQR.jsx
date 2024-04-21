@@ -99,10 +99,10 @@ const CreateQR = () => {
                                 </p>
 
                                 <InputComponent
-                                    label="Title"
+                                    label="Back-half"
                                     placeholder=""
                                     value={title}
-                                    onChange={(e) => setTitle(e.target.value)}
+                                    onChange={(e) => setBackHalf(e.target.value)}
                                     className="text-base w-full"
                                 />
                             </div>
@@ -267,7 +267,7 @@ const Footer = ({ url, title, backHalf }) => {
             <div className="flex gap-4 px-4 items-center justify-between">
                 <Button
                     label="Cancel"
-                    onClick={() => {}}
+                    onClick={() => { }}
                     className="bg-transparent text-blue-600 mr-2 rounded-sm hover:bg-zinc-100"
                 />
                 <Button

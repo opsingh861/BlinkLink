@@ -5,6 +5,7 @@ const User = require("../models/user.model")
 const errorHandler = require("../utils/error")
 const generateHashedString = require("../utils/generateLink")
 const getTitleFromUrl = require("../utils/getTitle")
+const QrCode = require("../models/qrcode.model")
 
 async function shortenLink(req, res, next) {
     let { url, back_half, title } = req.body
@@ -108,6 +109,10 @@ async function deleteLink(req, res, next) {
             return next(errorHandler(404, "Link not found"))
         }
         res.status(200).json({ message: "Link deleted successfully" })
+        const qr = await QrCode.findOneAndDelete({ shortUrl })
+        if (!qr) {
+            return;
+        }
     } catch (error) {
         console.error(error)
         next(errorHandler(400, error.message))
