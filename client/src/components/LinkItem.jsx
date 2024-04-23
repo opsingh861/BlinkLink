@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { fetchQrs } from "@/redux/qrSlice";
 
 const LinkItem = ({
     title,
@@ -51,6 +52,7 @@ const LinkItem = ({
             .delete(`/links/${shortUrl}`)
             .then(() => {
                 dispatch(fetchLinks());
+                dispatch(fetchQrs())
                 toast.success("Link deleted successfully");
                 navigation("/links");
             })

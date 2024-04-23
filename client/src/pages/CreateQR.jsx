@@ -7,12 +7,14 @@ import PropTypes from "prop-types";
 import axiosInstance from "@/lib/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { fetchQrs } from "@/redux/qrSlice";
 
 const CreateQR = () => {
     const [destination, setDestination] = useState("");
     const [title, setTitle] = useState("");
     const [back_half, setBackHalf] = useState(undefined);
-
+    const dispatch = useDispatch();
     return (
         <section
             className="flex overflow-y-auto bg-white"
@@ -109,7 +111,7 @@ const CreateQR = () => {
                         </div>
                     </div>
                 </form>
-                <Footer url={destination} title={title} back_half={back_half} />
+                <Footer url={destination} title={title} back_half={back_half} dispatch={dispatch} />
             </div>
 
             <div className="w-2/5 h-full bg-cover bg-center flex-col items-center pt-20 bg-[#f4f6fa] sticky top-0 hidden lg:flex">
@@ -125,7 +127,7 @@ const CreateQR = () => {
     );
 };
 
-const Footer = ({ url, title, backHalf }) => {
+const Footer = ({ url, title, backHalf, dispatch }) => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const properties = {
@@ -251,6 +253,7 @@ const Footer = ({ url, title, backHalf }) => {
             });
             setLoading(false);
             console.log(response.data);
+            dispatch(fetchQrs());
             navigate("/qrcode");
         } catch (error) {
             setLoading(false);
@@ -284,5 +287,6 @@ Footer.propTypes = {
     url: PropTypes.string,
     title: PropTypes.string,
     backHalf: PropTypes.string,
+    dispatch: PropTypes.func,
 };
 export default CreateQR;
