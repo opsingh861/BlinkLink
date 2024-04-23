@@ -2,6 +2,7 @@ import { BsStars } from "react-icons/bs";
 import Button from "@/components/Button";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import { links, qrCode, linkInBio, linkPromo } from "@/lib/imagesExport";
 
 const Home = () => {
     const cards = [
@@ -9,19 +10,19 @@ const Home = () => {
             text: "Make it short",
             cta: "Go to links",
             route: "/links",
-            image: "src/assets/links.png",
+            image: links,
         },
         {
             text: "Make it scannable",
             cta: "Go to QR Codes",
             route: "/qrcode",
-            image: "src/assets/qrcode.png",
+            image: qrCode,
         },
         {
             text: "Make a page",
             cta: "Go to Link-in-bio",
             route: "/link-in-bio",
-            image: "src/assets/link-in-bio.png",
+            image: linkInBio,
         },
     ];
     return (
@@ -116,7 +117,7 @@ const RightBanner = () => {
     return (
         <div className="flex flex-1 flex-col p-5 bg-white rounded-md gap-2 items-start">
             <img
-                src="src/assets/links-promotion.png"
+                src={linkPromo}
                 className="object-contain w-full h-40"
             />
             <h2 className="text-xl font-semibold">
@@ -129,7 +130,7 @@ const RightBanner = () => {
 
             <Button
                 label="View our plans"
-                onClick={() => {}}
+                onClick={() => { }}
                 className="text-sm mt-2 bg-blue-600 text-white rounded-sm hover:bg-blue-700"
             />
         </div>

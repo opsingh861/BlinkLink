@@ -2,6 +2,7 @@ import Button from "./Button";
 import { CiCircleCheck } from "react-icons/ci";
 import Divider from "./Divider";
 import PropTypes from "prop-types";
+import { linkSvg, qrSvg } from "@/lib/imagesExport";
 
 const cardContent = [
     {
@@ -16,7 +17,7 @@ const cardContent = [
             "Advanced analytics & tracking",
         ],
         button: "Get Started for Free",
-        icon: "src/assets/link.svg",
+        icon: linkSvg,
     },
     {
         title: "QR Codes",
@@ -30,7 +31,7 @@ const cardContent = [
             "Advanced analytics & tracking",
         ],
         button: "Get Started for Free",
-        icon: "src/assets/qr-code.svg",
+        icon: qrSvg,
     },
 ];
 const Connections = () => {

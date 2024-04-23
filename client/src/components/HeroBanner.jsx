@@ -1,6 +1,7 @@
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
-import images from "../lib/imagesExport";
+import  { heroImg } from "../lib/imagesExport";
+
 
 const HeroBanner = () => {
     const navigation = useNavigate();
@@ -26,7 +27,7 @@ const HeroBanner = () => {
             </div>
 
             <div className="hidden lg:flex items-center justify-center">
-                <img alt="hero" src={images.heroImg} />
+                <img alt="hero" src={heroImg} />
             </div>
         </section>
     );

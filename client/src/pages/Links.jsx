@@ -8,6 +8,7 @@ import Loader from "@/components/Loader"
 import { fetchLinks } from "@/redux/linksSlice"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { linkEmpty } from "@/lib/imagesExport"
 
 const Links = () => {
     const dispatch = useDispatch()
@@ -41,7 +42,7 @@ const Links = () => {
             <EmptyComponent
                 header="Shorten Links"
                 description="Create short links for your website, social media, and more."
-                image="src/assets/links-list-empty.png"
+                image={linkEmpty}
                 button={{
                     label: "Get Started",
                     onClick: () => {
