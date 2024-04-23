@@ -2,11 +2,11 @@
 import { useEffect, useState } from "react";
 
 import Analytics from "@/pages/Analytics";
-import Error404 from "@/pages/Error404";
 import LinkItem from "@/components/LinkItem";
 import { RiArrowGoBackFill } from "react-icons/ri";
 import axiosInstance from "@/lib/axiosInstance";
 import { useParams } from "react-router-dom";
+import Loader from "./Loader";
 
 const LinkDetail = () => {
     const { shortUrl } = useParams();
@@ -30,7 +30,7 @@ const LinkDetail = () => {
     }, []);
 
     if (!item) {
-        return <Error404 />;
+        return <Loader />;
     }
     return (
         <section className="rounded-sm mt-10 overflow-y-auto">
