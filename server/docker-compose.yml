@@ -2,26 +2,27 @@ version: '3.8'
 
 services:
   backend:
-    image: opsingh861/blinklink:01
+    image: opsingh861/blinklink:03
     container_name: backend
     ports:
       - "3000:3000"
     depends_on:
       - redis
-    networks:
-      - backend_network
+    # networks:
+    #   - backend_network
     env_file:
       - .env
     restart: unless-stopped
 
   redis:
     image: redis:latest
+    command: ["redis-server","--bind","redis","--port","6379"]
     container_name: redis
     ports:
       - "6379:6379"
-    networks:
-      - backend_network
-    restart: unless-stopped
+    # networks:
+    #   - backend_network
+    restart: always
 
-networks:
-  backend_network:
+# networks:
+#   backend_network:
