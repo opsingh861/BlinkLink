@@ -7,7 +7,7 @@ import QRCodeStyling from "qr-code-styling";
 import { useNavigate } from "react-router-dom";
 
 const QrCodeItem = ({ title, shortUrl, url, date, property }) => {
-    const fullUrl = `http://localhost:3000/${shortUrl}`;
+    const fullUrl = `https://blinklink.fun/${shortUrl}`;
     const [copySuccess, setCopySuccess] = useState(false);
     const ref = useRef(null);
     const navigation = useNavigate();

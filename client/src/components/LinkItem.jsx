@@ -25,7 +25,7 @@ const LinkItem = ({
     clicks,
     navigate = true,
 }) => {
-    const fullUrl = `http://localhost:3000/${shortUrl}`;
+    const fullUrl = `https://blinklink.fun/${shortUrl}`;
     const [copySuccess, setCopySuccess] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [newTitle, setNewTitle] = useState(title);
