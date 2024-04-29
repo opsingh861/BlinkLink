@@ -5,14 +5,16 @@ import { CiCalendar } from "react-icons/ci";
 import PropTypes from "prop-types";
 import QRCodeStyling from "qr-code-styling";
 import { useNavigate } from "react-router-dom";
+import { MdOutlineFileDownload } from "react-icons/md";
+
 
 const QrCodeItem = ({ title, shortUrl, url, date, property }) => {
     const fullUrl = `https://blinklink.fun/${shortUrl}`;
-    const [copySuccess, setCopySuccess] = useState(false);
+    const [fileExt, setFileExt] = useState("svg");
     const ref = useRef(null);
     const navigation = useNavigate();
 
-    const qrCode = new QRCodeStyling({});
+    const qrCode = new QRCodeStyling({ property });
 
     useEffect(() => {
         qrCode.append(ref.current);
@@ -22,30 +24,48 @@ const QrCodeItem = ({ title, shortUrl, url, date, property }) => {
         qrCode.update({
             data: fullUrl,
             width: 92,
-            height: 92,
+            height: 92
         });
-    }, [fullUrl]);
+    }, [fullUrl, fileExt]);
 
-    const copyToClipboard = () => {
-        navigator.clipboard
-            .writeText(fullUrl)
-
-            .then(() => {
-                setCopySuccess(true);
-                setTimeout(() => {
-                    setCopySuccess(false);
-                }, 2000);
-            })
-            .catch((error) => {
-                console.error("Failed to copy URL to clipboard:", error);
-            });
+    const onExtensionChange = (event) => {
+        setFileExt(event.target.value);
+        console.log(fileExt)
     };
+
+    const onDownloadClick = async () => {
+        if (!qrCode) return;
+
+        // Get the current size of the QR code
+        const qrCodeSize = 90;
+
+        // Calculate the desired size for the downloaded image (e.g., 4 times the current size)
+        const downloadSize = qrCodeSize * 4;
+
+        // Update the QR code with the new size
+        qrCode.update({
+            width: downloadSize,
+            height: downloadSize,
+        });
+
+        // Download the QR code image
+        await qrCode.download({
+            name: fullUrl,
+            extension: fileExt,
+        });
+
+        // Reset the QR code size back to its original size (optional)
+        qrCode.update({
+            width: qrCodeSize,
+            height: qrCodeSize,
+        });
+    };
+
     return (
         <section className="px-6 py-4 flex items-start justify-between gap-4 bg-white rounded-xl">
             <div className="h-24 w-24 border border-gray-300 flex items-center justify-center">
                 <span ref={ref} className="h-full w-full object-cover" />
             </div>
-
             <div className="flex flex-col overflow-hidden whitespace-nowrap overflow-ellipsis gap-1 flex-1">
                 <h1
                     className="font-bold text-xl mb-1 capitalize cursor-pointer hover:underline"
@@ -75,13 +95,14 @@ const QrCodeItem = ({ title, shortUrl, url, date, property }) => {
                 </div>
             </div>
 
-            <div>
-                <p
-                    className="border text-sm bg-gray-200 rounded-sm p-[2px] px-3 hover:bg-gray-300 hover:border-black/50 cursor-pointer"
-                    onClick={copyToClipboard}
-                >
-                    {copySuccess ? "Copied" : "Copy"}
-                </p>
+            <div className="flex">
+                <select onChange={onExtensionChange} value={fileExt}>
+                    <option value="svg">SVG</option>
+                    <option value="png">PNG</option>
+                    <option value="jpeg">JPEG</option>
+                    <option value="webp">WEBP</option>
+                </select>
+                <button className=" text-sm rounded-sm p-[2px] px-3 hover:bg-gray-300 hover:border-black/50 cursor-pointer" onClick={onDownloadClick}><MdOutlineFileDownload size={23} /></button>
             </div>
         </section>
     );

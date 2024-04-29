@@ -11,8 +11,7 @@ import Loader from "./Loader";
 const QrDetail = () => {
     const { shortUrl } = useParams();
     const [item, setItem] = useState(null);
-
-    const fetchLinkDetail = async () => {
+    const fetchQrDetails = async () => {
         try {
             const response = await axiosInstance.get(`/qr/getQr/${shortUrl}`);
             setItem(response.data.qrCode);
@@ -24,7 +23,7 @@ const QrDetail = () => {
     };
 
     useEffect(() => {
-        fetchLinkDetail();
+        fetchQrDetails();
     }, []);
 
     if (!item) {
